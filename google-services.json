@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "365069715792",
+    "firebase_url": "https://furry-sniffle.firebaseio.com",
+    "project_id": "furry-sniffle",
+    "storage_bucket": "furry-sniffle.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365069715792:android:57f5e9ce0b60a999",
+        "android_client_info": {
+          "package_name": "it.stockato.its.niukoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365069715792-hmblp2dukohmn2d7vgvqrvbvreum32kv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "it.stockato.its.niukoapp",
+            "certificate_hash": "986be94f570256be211715bdcd2e11e4011e5c8c"
+          }
+        },
+        {
+          "client_id": "365069715792-66lsep9cti856ojgbf27sbbg5mkctih7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD1LPt5qy_2QJt4q18mNTdz5pEaQE3Z3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365069715792-66lsep9cti856ojgbf27sbbg5mkctih7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
