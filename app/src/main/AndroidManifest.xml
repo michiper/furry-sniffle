@@ -11,7 +11,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Pages.Login" />
         <activity android:name=".Pages.HomePage"></activity>
-        <activity android:name=".Pages.SplashScreen">
+        <activity android:name=".Pages.SplashScreen"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
