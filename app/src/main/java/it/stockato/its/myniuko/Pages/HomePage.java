@@ -71,7 +71,7 @@ public class HomePage extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+           // super.onBackPressed();
         }
     }
 
@@ -118,4 +118,5 @@ public class HomePage extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
