@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Pages.Login" />
-        <activity android:name=".Pages.HomePage"></activity>
         <activity android:name=".Pages.SplashScreen"
             android:theme="@style/SplashTheme">
             <intent-filter>
