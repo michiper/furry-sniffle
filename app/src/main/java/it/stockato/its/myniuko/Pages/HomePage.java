@@ -20,10 +20,11 @@ import android.view.Menu;
 import android.widget.Toast;
 
 import it.stockato.its.myniuko.Fragment.CalendarioFragment;
+import it.stockato.its.myniuko.Fragment.NiukoFragment;
 import it.stockato.its.myniuko.R;
 
 public class HomePage extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, CalendarioFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CalendarioFragment.OnFragmentInteractionListener, NiukoFragment.OnFragmentInteractionListener {
 
     android.support.v4.app.FragmentManager manager;
 
@@ -59,7 +60,14 @@ public class HomePage extends AppCompatActivity
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch(menuItem.getItemId()){
                     case R.id.calendario:
-                        Toast.makeText(HomePage.this, "Calendario", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HomePage.this, "Calendario", Toast.LENGTH_SHORT).show();
+                        manager = getSupportFragmentManager();
+                        final FragmentTransaction transaction1 = manager.beginTransaction();
+
+                        final CalendarioFragment fragmentC = new CalendarioFragment();
+                        //replace perchè alrimenti si sovrappone
+                        transaction1.replace(R.id.container, fragmentC);
+                        transaction1.commit();
                         break;
 
                     case R.id.miei_corsi:
@@ -67,7 +75,15 @@ public class HomePage extends AppCompatActivity
                         break;
 
                     case R.id.niuko:
-                        Toast.makeText(HomePage.this, "Niuko", Toast.LENGTH_SHORT).show();
+                       //Toast.makeText(HomePage.this, "Niuko", Toast.LENGTH_SHORT).show();
+                        //per far apparire il fragment
+                        manager = getSupportFragmentManager();
+                        final FragmentTransaction transaction = manager.beginTransaction();
+
+                        final NiukoFragment fragmentN = new NiukoFragment();
+                        //replace perchè alrimenti si sovrappone
+                        transaction.replace(R.id.container, fragmentN);
+                        transaction.commit();
                         break;
 
                     case R.id.email:
