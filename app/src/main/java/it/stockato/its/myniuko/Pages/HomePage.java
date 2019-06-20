@@ -1,8 +1,10 @@
 package it.stockato.its.myniuko.Pages;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,10 +16,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import it.stockato.its.myniuko.Fragment.CalendarioFragment;
 import it.stockato.its.myniuko.R;
 
 public class HomePage extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CalendarioFragment.OnFragmentInteractionListener {
+
+    android.support.v4.app.FragmentManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +30,16 @@ public class HomePage extends AppCompatActivity
         setContentView(R.layout.activity_home_page);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //per far apparire il fragment
+        manager = getSupportFragmentManager();
+        final FragmentTransaction transaction = manager.beginTransaction();
+
+        final CalendarioFragment fragment = new CalendarioFragment();
+        //replace perchè alrimenti si sovrappone
+        transaction.replace(R.id.container, fragment);
+        transaction.commit();
+
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -74,4 +89,12 @@ public class HomePage extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
+        }
+        return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }
