@@ -7,6 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import it.stockato.its.myniuko.R;
 
@@ -18,7 +25,7 @@ import it.stockato.its.myniuko.R;
  * Use the {@link CalendarioFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CalendarioFragment extends Fragment {
+public class CalendarioFragment extends Fragment  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -33,6 +40,10 @@ public class CalendarioFragment extends Fragment {
     public CalendarioFragment() {
         // Required empty public constructor
     }
+
+    //view del fragment
+    CalendarView calendario;
+    TextView tv_data;
 
     /**
      * Use this factory method to create a new instance of
@@ -59,13 +70,52 @@ public class CalendarioFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendario, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_calendario, container, false);
+
+        calendario = view.findViewById(R.id.calendarView);
+        tv_data = view.findViewById(R.id.tv_data);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String selectedDate = sdf.format(new Date(calendario.getDate()));
+        tv_data.setText(selectedDate);
+
+        /*
+        JSON
+           { data: 02/02/2019
+             mattina : Tommo Ago
+             pomeriggio : Mauro Mazzetto
+            }
+         */
+        //trovare il modo di colorare le date con degli eventi
+
+        calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                String day, monthS;
+               if(dayOfMonth<10){
+                    day = "0"+dayOfMonth;
+               }else{
+                   day = String.valueOf(dayOfMonth);
+               }
+                if(month<10){
+                    monthS = "0"+month;
+                }else{
+                    monthS = String.valueOf(month);
+                }
+                    tv_data.setText(day+"-"+monthS+"-"+year);
+
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -91,6 +141,8 @@ public class CalendarioFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this

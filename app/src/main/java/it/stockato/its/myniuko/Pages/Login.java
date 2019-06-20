@@ -33,11 +33,12 @@ public class Login extends AppCompatActivity implements DialogFragment.IDialogFr
                 username = ed_username.getText().toString();
                 password = ed_password.getText().toString();
 
+                /*
                 if(username.isEmpty() || password.isEmpty()){
                     DialogFragment vDialog = new DialogFragment("Attenzione","Uno o più campi vuoti", 1);
                     vDialog.show(getFragmentManager(), "dialog");
                 }else{
-/*
+
                     if(username.equals("niuko") && password.equals("psw")){
                         Intent intent = new Intent(Login.this, HomePage.class);
                         startActivity(intent);
@@ -45,11 +46,11 @@ public class Login extends AppCompatActivity implements DialogFragment.IDialogFr
                         DialogFragment vDialog = new DialogFragment("Attenzione","Email o password sbagliata", 1);
                         vDialog.show(getFragmentManager(), "dialog");
                     }
-                    */
-                    Intent intent = new Intent(Login.this, HomePage.class);
-                    startActivity(intent);
-                }
 
+
+                }*/
+                Intent intent = new Intent(Login.this, HomePage.class);
+                startActivity(intent);
 
             }
         });

@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
+import android.widget.TextView;
 
 import it.stockato.its.myniuko.R;
 
@@ -18,7 +20,7 @@ import it.stockato.its.myniuko.R;
  * Use the {@link NiukoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NiukoFragment extends Fragment {
+public class NiukoFragment extends Fragment  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,6 +31,8 @@ public class NiukoFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+
 
     public NiukoFragment() {
         // Required empty public constructor
@@ -59,6 +63,9 @@ public class NiukoFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+
     }
 
     @Override
@@ -91,6 +98,8 @@ public class NiukoFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this
