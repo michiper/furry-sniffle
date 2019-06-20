@@ -42,11 +42,14 @@ public class Login extends AppCompatActivity implements DialogFragment.IDialogFr
                         Intent intent = new Intent(Login.this, HomePage.class);
                         startActivity(intent);
                     }else {
-*/
+
                         DialogFragment vDialog = new DialogFragment("Attenzione","Email o password sbagliata", 1);
                         vDialog.show(getFragmentManager(), "dialog");
                     }
-               // }
+                    */
+                    Intent intent = new Intent(Login.this, HomePage.class);
+                    startActivity(intent);
+                }
 
 
             }
