@@ -12,18 +12,23 @@ import it.stockato.its.myniuko.R;
 
 public class SplashScreen extends AppCompatActivity {
 
-    TextView tv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
-        tv = findViewById(R.id.tv);
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SplashScreen.this,Login.class);
-                startActivity(intent);
-            }
-        });
+
+        try {
+            //set time in mili
+            Thread.sleep(3000);
+            Intent intent = new Intent(SplashScreen.this,Login.class);
+            startActivity(intent);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+
     }
 }
