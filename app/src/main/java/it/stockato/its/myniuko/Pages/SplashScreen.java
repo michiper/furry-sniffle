@@ -27,8 +27,8 @@ public class SplashScreen extends AppCompatActivity {
                 } catch (InterruptedException ie) {
                     ie.printStackTrace();
                 } finally {
-                    Intent openMainActivity = new Intent(SplashScreen.this, HomePage.class);
-                    startActivity(openMainActivity );
+                    Intent openLoginActivity = new Intent(SplashScreen.this, Login.class);
+                    startActivity(openLoginActivity );
                     SplashScreen.this.finish();
                 }
 

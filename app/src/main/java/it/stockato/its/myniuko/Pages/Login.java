@@ -47,8 +47,8 @@ public class Login extends AppCompatActivity implements DialogFragment.IDialogFr
                         vDialog.show(getFragmentManager(), "dialog");
                     }
                     */
-                    Intent intent = new Intent(Login.this, HomePage.class);
-                    startActivity(intent);
+                    //Intent intent = new Intent(Login.this, HomePage.class);
+                    //startActivity(intent);
                 }
 
 
