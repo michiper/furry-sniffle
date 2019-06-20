@@ -2,6 +2,8 @@ package it.stockato.its.myniuko.Pages;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
@@ -15,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.Toast;
 
 import it.stockato.its.myniuko.Fragment.CalendarioFragment;
 import it.stockato.its.myniuko.R;
@@ -48,6 +51,33 @@ public class HomePage extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch(menuItem.getItemId()){
+                    case R.id.calendario:
+                        Toast.makeText(HomePage.this, "Calendario", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case R.id.miei_corsi:
+                        Toast.makeText(HomePage.this, "Miei corsi", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case R.id.niuko:
+                        Toast.makeText(HomePage.this, "Niuko", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case R.id.email:
+                        Toast.makeText(HomePage.this, "Email", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+
+                return true;
+            }
+        });
     }
 
     @Override
@@ -56,7 +86,7 @@ public class HomePage extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+           // super.onBackPressed();
         }
     }
 

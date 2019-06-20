@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/calendario"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_calendario"
+        android:title="Calendario"/>
+
+    <item
+        android:id="@+id/miei_corsi"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_corsi"
+        android:title="Miei corsi"/>
+
+    <item
+        android:id="@+id/niuko"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_niuko"
+        android:title="Niuko"/>
+
+    <item
+        android:id="@+id/email"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_email"
+        android:title="Email"/>
+</menu>
