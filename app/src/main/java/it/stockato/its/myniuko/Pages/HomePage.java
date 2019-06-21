@@ -1,5 +1,6 @@
 package it.stockato.its.myniuko.Pages;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -9,6 +10,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+
+import android.util.Log;
 import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -18,11 +21,24 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import it.stockato.its.myniuko.DialogFragment;
 import it.stockato.its.myniuko.Fragment.CalendarioFragment;
 import it.stockato.its.myniuko.Fragment.EmailFragment;
 import it.stockato.its.myniuko.Fragment.MieiCorsiFragment;
 import it.stockato.its.myniuko.Fragment.NiukoFragment;
 import it.stockato.its.myniuko.R;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class HomePage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -32,6 +48,7 @@ public class HomePage extends AppCompatActivity
         EmailFragment.OnFragmentInteractionListener {
 
     FragmentManager manager;
+    String mUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +56,50 @@ public class HomePage extends AppCompatActivity
         setContentView(R.layout.activity_home_page);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mUserID = getIntent().getExtras().getString("id");
+        Log.d("id", "     " + mUserID);
+
+        //OTTIENE I DATI DELL'UTENTE LOGGATO
+
+        OkHttpClient vClient = new OkHttpClient();
+        String url = "http://kennedysql.altervista.org/api_kennedy/getUser.php";
+        RequestBody vBody = new FormBody.Builder().add("ID",mUserID).build();
+        Request vRequest = new Request.Builder().url(url).post(vBody).build();
+        vClient.newCall(vRequest).enqueue(new Callback()
+        {
+            @Override
+            public void onFailure(Call call, IOException e)
+            {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException
+            {
+                if(response.isSuccessful())
+                {
+                    final String myResponse = response.body().string();
+                    HomePage.this.runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            try
+                            {
+                                JSONObject json = new JSONObject(myResponse);
+                                Log.d("user", myResponse);
+
+                            }
+                            catch (JSONException e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            }
+        });
 
         //per far apparire il fragment
         manager = getSupportFragmentManager();
