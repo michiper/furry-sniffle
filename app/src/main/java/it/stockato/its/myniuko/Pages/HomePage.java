@@ -89,6 +89,8 @@ public class HomePage extends AppCompatActivity
                             {
                                 JSONObject json = new JSONObject(myResponse);
                                 Log.d("user", myResponse);
+                                String ID = json.getString("ID");
+
 
                             }
                             catch (JSONException e)
