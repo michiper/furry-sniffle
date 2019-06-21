@@ -15,8 +15,8 @@
     <item
         android:id="@+id/niuko"
         android:enabled="true"
-        android:icon="@drawable/ic_action_niuko"
-        android:title="Niuko"/>
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="Profilo"/>
 
     <item
         android:id="@+id/email"

@@ -50,14 +50,6 @@ public class HomePage extends AppCompatActivity
         transaction.commit();
 
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
-
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -87,14 +79,7 @@ public class HomePage extends AppCompatActivity
 
                     case R.id.niuko:
                        //Toast.makeText(HomePage.this, "Niuko", Toast.LENGTH_SHORT).show();
-                        //per far apparire il fragment
-                        manager = getSupportFragmentManager();
-                        final FragmentTransaction transaction = manager.beginTransaction();
 
-                        final NiukoFragment fragmentN = new NiukoFragment();
-                        //replace perchè alrimenti si sovrappone
-                        transaction.replace(R.id.container, fragmentN);
-                        transaction.commit();
                         break;
 
                     case R.id.email:
@@ -126,7 +111,7 @@ public class HomePage extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_page, menu);
+        getMenuInflater().inflate(R.menu.profile, menu);
         return true;
     }
 
@@ -138,6 +123,16 @@ public class HomePage extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        if (item.getItemId() == R.id.btn_pofilo){
+            //per far apparire il fragment
+            manager = getSupportFragmentManager();
+            final FragmentTransaction transaction = manager.beginTransaction();
+
+            final NiukoFragment fragmentN = new NiukoFragment();
+            //replace perchè alrimenti si sovrappone
+            transaction.replace(R.id.container, fragmentN);
+            transaction.commit();
+        }
 
         return super.onOptionsItemSelected(item);
     }
