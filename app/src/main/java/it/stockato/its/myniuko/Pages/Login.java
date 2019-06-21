@@ -107,7 +107,7 @@ public class Login extends AppCompatActivity implements DialogFragment.IDialogFr
                                             {
                                                 JSONObject json = new JSONObject(myResponse);
                                                 String ID = json.getString("ID");
-                                                Log.d("ID", ID);
+                                                //Log.d("ID", ID);
                                                 if(Integer.parseInt(ID) == -1)
                                                 {
                                                     DialogFragment wrongData = new DialogFragment("Attenzione", "Impossibile accedere, credenziali errate.", 1);
