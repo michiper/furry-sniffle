@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import it.stockato.its.myniuko.DialogFragment;
 import it.stockato.its.myniuko.R;
@@ -20,26 +24,44 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 */
 public class Login extends AppCompatActivity implements DialogFragment.IDialogFragment {
-    EditText ed_username, ed_password;
-    Button btn_login;
-    CheckBox ricordaCredenziali;
-    String username, password;
+
+
+    TextInputEditText mEmailEditText;
+    TextInputEditText mPasswordEditText;
+
+    CheckBox mRememberPassword;
+    TextView mForgottenPassword;
+
+    MaterialButton mLoginButton;
+
+    String mEmail, mPassword;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        ed_username = findViewById(R.id.ed_username);
-        ed_password = findViewById(R.id.ed_password);
-        btn_login = findViewById(R.id.btn_login);
-        ricordaCredenziali = findViewById(R.id.ricorda_credenziali);
+
+        mEmailEditText = findViewById(R.id.login_email_field);
+        mPasswordEditText = findViewById(R.id.login_password_field);
+
+        mRememberPassword = findViewById(R.id.login_remember_password);
+        mForgottenPassword = findViewById(R.id.login_forgotten_password);
+
+        mLoginButton = findViewById(R.id.login_login_button);
 
 
-        btn_login.setOnClickListener(new View.OnClickListener() {
+        mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                username = ed_username.getText().toString();
-                password = ed_password.getText().toString();
+            public void onClick(View v) {
+
+                mEmail = mEmailEditText.getText().toString();
+                mPassword = mPasswordEditText.getText().toString();
+
+
+                // NEED REFACTOR
 
                 /*
                 if(username.isEmpty() || password.isEmpty()){
@@ -107,6 +129,7 @@ public class Login extends AppCompatActivity implements DialogFragment.IDialogFr
 */
                 Intent intent = new Intent(Login.this, HomePage.class);
                 startActivity(intent);
+
             }
         });
 

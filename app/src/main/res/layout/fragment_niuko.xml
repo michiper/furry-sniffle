@@ -190,7 +190,7 @@
                     android:weightSum="10">
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/login_niuko_logo"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"

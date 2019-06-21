@@ -16,7 +16,8 @@
             android:name=".Pages.HomePage"
             android:label="@string/title_activity_home_page"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".Pages.Login" />
+        <activity android:name=".Pages.Login"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".Pages.SplashScreen"
             android:theme="@style/SplashTheme">

@@ -1,5 +1,20 @@
 <resources>
+
     <string name="app_name">MyNiuko</string>
+
+
+    <!-- Login -->
+
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+
+    <string name="login_remember_password">Remember password</string>
+    <string name="login_forgotten_password">Did you forgot the password?</string>
+
+    <string name="login_login_button">Login</string>
+
+
+
     <string name="title_activity_home_page">HomePage</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
