@@ -33,6 +33,7 @@ import it.stockato.its.myniuko.Fragment.MieiCorsiFragment;
 import it.stockato.its.myniuko.Fragment.NiukoFragment;
 import it.stockato.its.myniuko.Fragment.UtenteFragment;
 import it.stockato.its.myniuko.R;
+import it.stockato.its.myniuko.Utente.Utente;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -50,7 +51,8 @@ public class HomePage extends AppCompatActivity
         UtenteFragment.OnFragmentInteractionListener{
 
     FragmentManager manager;
-    String mUserID;
+    public static Utente userLogged;
+    private String mUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +61,16 @@ public class HomePage extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setTitle("MyNiuko");
+
         mUserID = getIntent().getExtras().getString("id");
-        Log.d("id", "     " + mUserID);
+        userLogged = new Utente();
+        //Log.d("id", "     " + mUserID);
 
         //OTTIENE I DATI DELL'UTENTE LOGGATO
 
         OkHttpClient vClient = new OkHttpClient();
-        String url = "http://kennedysql.altervista.org/api_kennedy/getUser.php";
+        final String url = "http://kennedysql.altervista.org/api_kennedy/getUser.php";
         RequestBody vBody = new FormBody.Builder().add("ID",mUserID).build();
         Request vRequest = new Request.Builder().url(url).post(vBody).build();
         vClient.newCall(vRequest).enqueue(new Callback()
@@ -90,8 +95,18 @@ public class HomePage extends AppCompatActivity
                             try
                             {
                                 JSONObject json = new JSONObject(myResponse);
-                                Log.d("user", myResponse);
-                                String ID = json.getString("ID");
+
+                                userLogged = new Utente(
+                                        json.getString("ID"),
+                                        json.getString("TipoUtente"),
+                                        json.getString("Nome"),
+                                        json.getString("Cognome"),
+                                        json.getString("Email"),
+                                        json.getString("Pwd"),
+                                        json.getString("PwdChange"),
+                                        json.getString("CF"),
+                                        json.getString("ImgProfilo")
+                                        );
 
 
                             }
