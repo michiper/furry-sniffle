@@ -1,8 +1,13 @@
 package it.stockato.its.myniuko.Pages;
 
+import android.content.Context;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -36,6 +41,7 @@ public class Login extends AppCompatActivity implements DialogFragment.IDialogFr
 
     CheckBox mRememberPassword;
     TextView mForgottenPassword;
+    boolean connected = false;
 
     MaterialButton mLoginButton;
 
@@ -72,75 +78,75 @@ public class Login extends AppCompatActivity implements DialogFragment.IDialogFr
                 }
                 else
                 {
-                    OkHttpClient vClient = new OkHttpClient();
-                    String url = "http://kennedysql.altervista.org/api_kennedy/login.php";
-                    RequestBody vBody = new FormBody.Builder().add("email", mEmail).add("password", mPassword).build();
-                    Request request = new Request.Builder().url(url).post(vBody).build();
-                    vClient.newCall(request).enqueue(new Callback()
+                    if(isConnected())
                     {
-                        @Override
-                        public void onFailure(Call call, IOException e)
+                        OkHttpClient vClient = new OkHttpClient();
+                        String url = "http://kennedysql.altervista.org/api_kennedy/login.php";
+                        RequestBody vBody = new FormBody.Builder().add("email", mEmail).add("password", mPassword).build();
+                        Request vRequest = new Request.Builder().url(url).post(vBody).build();
+                        vClient.newCall(vRequest).enqueue(new Callback()
                         {
-                            e.printStackTrace();
-                        }
-
-                        @Override
-                        public void onResponse(Call call, final Response response) throws IOException
-                        {
-                            if(response.isSuccessful())
+                            @Override
+                            public void onFailure(Call call, IOException e)
                             {
-                                final String myResponse = response.body().string();
-                                Login.this.runOnUiThread(new Runnable()
-                                {
-                                    @Override
-                                    public void run()
-                                    {
-                                        try
-                                        {
-                                            JSONObject json = new JSONObject(myResponse);
-                                            String ID = json.getString("ID");
-                                            if(ID == "-1")
-                                            {
-                                                DialogFragment notSuccess = new DialogFragment("Attenzione", "Impossibile accedere, credenziali errate.", 1);
-                                                notSuccess.show(getFragmentManager(), "dialog");
-                                            }
-                                            else
-                                            {
-                                                Intent mIntent = new Intent(Login.this, HomePage.class);
-                                                Bundle mBundle = new Bundle();
-                                                mBundle.putString("id", String.valueOf(ID));
-                                                mIntent.putExtras(mBundle);
-                                                startActivity(mIntent);
-                                            }
-                                        }
-
-
-                                            /*switch (ID)
-                                            {
-                                                case "1":
-                                                    Intent intent = new Intent(Login.this, HomePage.class);
-                                                    startActivity(intent);
-                                                    break;
-
-                                                case "-1":
-                                                    DialogFragment notSuccess = new DialogFragment("Attenzione", "Impossibile accedere, credenziali errate.", 1);
-                                                    notSuccess.show(getFragmentManager(), "dialog");
-                                                    break;
-
-                                                default:
-                                                    DialogFragment failed = new DialogFragment("Attenzione", "Errore, impossibile eseguire l'operazione.", 1);
-                                                    failed.show(getFragmentManager(), "dialog");
-                                                    break;
-                                            }*/
-                                        catch (JSONException e)
-                                        {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                });
+                                e.printStackTrace();
                             }
-                        }
-                    });
+
+                            @Override
+                            public void onResponse(Call call, final Response response) throws IOException
+                            {
+                                if(response.isSuccessful())
+                                {
+                                    final String myResponse = response.body().string();
+                                    Login.this.runOnUiThread(new Runnable()
+                                    {
+                                        @Override
+                                        public void run()
+                                        {
+                                            try
+                                            {
+                                                JSONObject json = new JSONObject(myResponse);
+                                                String ID = json.getString("ID");
+                                                Log.d("ID", ID);
+                                                if(Integer.parseInt(ID) == -1)
+                                                {
+                                                    DialogFragment wrongData = new DialogFragment("Attenzione", "Impossibile accedere, credenziali errate.", 1);
+                                                    wrongData.show(getFragmentManager(), "dialog");
+                                                    Log.d("errore", ID);
+                                                }
+                                                else
+                                                {
+                                                    if(Integer.parseInt(ID) > 0)
+                                                    {
+                                                        Intent mIntent = new Intent(Login.this, HomePage.class);
+                                                        Bundle mBundle = new Bundle();
+                                                        mBundle.putString("id", String.valueOf(ID));
+                                                        mIntent.putExtras(mBundle);
+                                                        startActivity(mIntent);
+                                                    }
+                                                    else
+                                                    {
+                                                        DialogFragment notSuccess = new DialogFragment("Attenzione", "Impossibile accedere.", 1);
+                                                        notSuccess.show(getFragmentManager(), "dialog");
+                                                    }
+                                                }
+                                            }
+                                            catch (JSONException e)
+                                            {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                    else
+                    {
+                        DialogFragment noConnection = new DialogFragment("Attenzione", "Impossibile accedere. Controlla la tua connessione e riprova.", 1);
+                        noConnection.show(getFragmentManager(), "dialog");
+                    }
+
                 }
                 //Intent intent = new Intent(Login.this, HomePage.class);
                 //startActivity(intent);
@@ -153,6 +159,21 @@ public class Login extends AppCompatActivity implements DialogFragment.IDialogFr
     //metodo del dialog fragment
     @Override
     public void onResponse(boolean response) {
+
+    }
+
+    public boolean isConnected(){
+
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            return true;
+        }
+        else
+        {
+            return false;
+        }
 
     }
 }
