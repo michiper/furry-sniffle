@@ -11,10 +11,11 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
+import it.stockato.its.myniuko.Calendario.Lezioni;
 import it.stockato.its.myniuko.R;
 
 /**
@@ -43,7 +44,7 @@ public class CalendarioFragment extends Fragment  {
 
     //view del fragment
     CalendarView calendario;
-    TextView tv_data;
+    TextView tv_data, tv_mattina, tv_pomeriggio;
 
     /**
      * Use this factory method to create a new instance of
@@ -83,10 +84,13 @@ public class CalendarioFragment extends Fragment  {
 
         calendario = view.findViewById(R.id.calendarView);
         tv_data = view.findViewById(R.id.tv_data);
+        tv_mattina = view.findViewById(R.id.tv_mattina);
+        tv_pomeriggio = view.findViewById(R.id.tv_pomeriggio);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String selectedDate = sdf.format(new Date(calendario.getDate()));
         tv_data.setText(selectedDate);
+
 
         /*
         JSON
@@ -97,26 +101,58 @@ public class CalendarioFragment extends Fragment  {
          */
         //trovare il modo di colorare le date con degli eventi
 
+        final ArrayList<Lezioni> listalezioni = new ArrayList<Lezioni>();
+        listalezioni.add(new Lezioni("01-07-2019", "Tommaso Agostini", "Mauro Mazzetto"));
+        listalezioni.add(new Lezioni("02-05-2019", "Luongo Alberto", "Cappello Antonio"));
+        listalezioni.add(new Lezioni("01-06-2019", "Tommaso Agostini", "Tommaso Agostini"));
+        lezioni(selectedDate, listalezioni);
         calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                String day, monthS;
+                String day, monthS, d;
                if(dayOfMonth<10){
                     day = "0"+dayOfMonth;
                }else{
                    day = String.valueOf(dayOfMonth);
                }
-                if(month<10){
-                    monthS = "0"+month;
+                if(month<9){
+                    monthS = "0"+(month+1);
                 }else{
-                    monthS = String.valueOf(month);
+                    monthS = String.valueOf(month+1);
                 }
-                    tv_data.setText(day+"-"+monthS+"-"+year);
-
+                tv_data.setText(day+"-"+monthS+"-"+year);
+                d = day+"-"+monthS+"-"+year;
+                lezioni(d, listalezioni);
             }
         });
 
+
+
         return view;
     }
+
+
+    public void lezioni(String data, ArrayList<Lezioni> listalezioni){
+
+        //Toast.makeText(getContext(), data, Toast.LENGTH_SHORT).show();
+        for(int i=0; i<listalezioni.size();i++){
+            Lezioni l = listalezioni.get(i);
+            String d = l.getData();
+           // Toast.makeText(getContext(), d, Toast.LENGTH_SHORT).show();
+            if(d.equals(data)){
+                tv_mattina.setText(l.getMattina());
+                tv_pomeriggio.setText(l.getPomeriggio());
+
+                break;
+            }else{
+                tv_mattina.setText("Nessuna lezione");
+                tv_pomeriggio.setText("Nessuna lezione");
+
+            }
+        }
+
+    }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
