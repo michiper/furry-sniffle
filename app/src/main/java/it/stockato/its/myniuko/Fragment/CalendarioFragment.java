@@ -1,21 +1,40 @@
 package it.stockato.its.myniuko.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import it.stockato.its.myniuko.Calendario.CalendarioCorso;
 import it.stockato.its.myniuko.Calendario.Lezioni;
+import it.stockato.its.myniuko.DialogFragment;
+import it.stockato.its.myniuko.Pages.HomePage;
+import it.stockato.its.myniuko.Pages.Login;
 import it.stockato.its.myniuko.R;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,6 +91,7 @@ public class CalendarioFragment extends Fragment  {
         }
 
 
+        chiamata();
     }
 
     @Override
@@ -178,6 +198,98 @@ public class CalendarioFragment extends Fragment  {
         mListener = null;
     }
 
+    //per la chiamata
+    public void chiamata(){
+        Log.d("STRONZO", "chiamata");
+        OkHttpClient vClient = new OkHttpClient();
+        String url = "http://kennedysql.altervista.org/api_kennedy/userCalendar.php";
+        RequestBody vBody = new FormBody.Builder().add("ID", "1").build(); //devo mandare l'id dell'utente (mario rossi =1)
+        Request vRequest = new Request.Builder().url(url).post(vBody).build();
+        vClient.newCall(vRequest).enqueue(new Callback()
+        {
+            @Override
+            public void onFailure(Call call, IOException e)
+            {
+                Log.d("STRONZO", "fail ");
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException
+            {
+                Log.d("STRONZO", "response");
+                if(response.isSuccessful())
+                {
+                    Log.d("STRONZO", "response success");
+                    final String myResponse = response.body().string();
+                    getActivity().runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            try
+                            {
+                                JSONArray jsonArray = new JSONArray(myResponse);
+                                Log.d("STRONZO", "response "+myResponse);
+                                ArrayList<CalendarioCorso> list = new ArrayList<CalendarioCorso>();
+                                ArrayList<JSONObject> arrayList = new ArrayList(jsonArray.length());
+
+                                if(arrayList.size()==0){
+                                    DialogFragment wrongData = new DialogFragment("Attenzione", "Non ci sono lezioni per te", 1);
+                                    wrongData.show(getActivity().getFragmentManager(), "dialog");
+                                }else{
+                                    String id,idCorso,idModulo,dataGiorno,oreInizio,oreFine;
+                                    String autla,ore, statoGiorno,codiceCorso,titoloCorso;
+                                    String descrizioneCorso,totOreCorso,QRCorso,oreMin;
+                                    String dataInizioAtt,dataFineAtt,statoCorso,nomeAule;
+
+                                    for(int i=0;i < jsonArray.length();i++){
+                                        arrayList.add(jsonArray.getJSONObject(i));
+                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                        id = jsonObject.getString("ID");
+                                        idCorso = jsonObject.getString("IDCorso");
+                                        idModulo = jsonObject.getString("IDModulo");
+                                        dataGiorno = jsonObject.getString("DataGiorno");
+                                        oreInizio = jsonObject.getString("OreInizio");
+                                        oreFine = jsonObject.getString("OreFine");
+                                        autla = jsonObject.getString("Aula");
+                                        ore = jsonObject.getString("Ore");
+                                        statoGiorno = jsonObject.getString("StatoGiorno");
+                                        codiceCorso = jsonObject.getString("CodiceCorso");
+                                        titoloCorso = jsonObject.getString("TitoloCorso");
+                                        descrizioneCorso = jsonObject.getString("TitoloCorso");
+                                        totOreCorso = jsonObject.getString("TotOreCorso");
+                                        QRCorso = jsonObject.getString("QRCorso");
+                                        oreMin = jsonObject.getString("OreMin");
+                                        dataInizioAtt = jsonObject.getString("DataInizioAtt");
+                                        dataFineAtt = jsonObject.getString("DataFineAtt");
+                                        statoCorso = jsonObject.getString("StatoCorso");
+                                        nomeAule = jsonObject.getString("NomeAule");
+
+                                        CalendarioCorso calendarioCorso = new CalendarioCorso(id, idCorso,idModulo,dataGiorno,oreInizio,
+                                                oreFine,autla,ore, statoGiorno,codiceCorso,titoloCorso,
+                                                descrizioneCorso,totOreCorso,QRCorso,oreMin,dataInizioAtt,dataFineAtt,
+                                                statoCorso,nomeAule);
+
+                                        list.add(calendarioCorso);
+
+                                    }
+
+                                }
+
+
+                            }
+                            catch (JSONException e)
+                            {
+                                Log.d("STRONZO", "exception: "+e.getMessage());
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
 
 
     /**
