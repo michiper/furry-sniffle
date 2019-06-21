@@ -121,6 +121,7 @@ public class CalendarioFragment extends Fragment  {
                 tv_data.setText(day+"-"+monthS+"-"+year);
                 d = day+"-"+monthS+"-"+year;
                 lezioni(d, listalezioni);
+                
             }
         });
 

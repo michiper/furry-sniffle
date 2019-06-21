@@ -19,12 +19,17 @@ import android.view.Menu;
 import android.widget.Toast;
 
 import it.stockato.its.myniuko.Fragment.CalendarioFragment;
+import it.stockato.its.myniuko.Fragment.EmailFragment;
 import it.stockato.its.myniuko.Fragment.MieiCorsiFragment;
 import it.stockato.its.myniuko.Fragment.NiukoFragment;
 import it.stockato.its.myniuko.R;
 
 public class HomePage extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, CalendarioFragment.OnFragmentInteractionListener, NiukoFragment.OnFragmentInteractionListener, MieiCorsiFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        CalendarioFragment.OnFragmentInteractionListener,
+        NiukoFragment.OnFragmentInteractionListener,
+        MieiCorsiFragment.OnFragmentInteractionListener,
+        EmailFragment.OnFragmentInteractionListener {
 
     FragmentManager manager;
 
@@ -93,7 +98,13 @@ public class HomePage extends AppCompatActivity
                         break;
 
                     case R.id.email:
-                        Toast.makeText(HomePage.this, "Email", Toast.LENGTH_SHORT).show();
+                        manager = getSupportFragmentManager();
+                        final FragmentTransaction transaction3 = manager.beginTransaction();
+
+                        final EmailFragment fragmentE = new EmailFragment();
+                        //replace perchè alrimenti si sovrappone
+                        transaction3.replace(R.id.container, fragmentE);
+                        transaction3.commit();
                         break;
                 }
 

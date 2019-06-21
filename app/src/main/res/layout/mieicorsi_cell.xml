@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:cardElevation="2dp"
+        app:cardMaxElevation="2dp"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="4dp"
         tools:layout_editor_absoluteY="12dp">
