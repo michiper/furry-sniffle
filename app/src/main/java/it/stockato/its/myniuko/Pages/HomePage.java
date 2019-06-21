@@ -31,6 +31,7 @@ import it.stockato.its.myniuko.Fragment.CalendarioFragment;
 import it.stockato.its.myniuko.Fragment.EmailFragment;
 import it.stockato.its.myniuko.Fragment.MieiCorsiFragment;
 import it.stockato.its.myniuko.Fragment.NiukoFragment;
+import it.stockato.its.myniuko.Fragment.UtenteFragment;
 import it.stockato.its.myniuko.R;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -45,7 +46,8 @@ public class HomePage extends AppCompatActivity
         CalendarioFragment.OnFragmentInteractionListener,
         NiukoFragment.OnFragmentInteractionListener,
         MieiCorsiFragment.OnFragmentInteractionListener,
-        EmailFragment.OnFragmentInteractionListener {
+        EmailFragment.OnFragmentInteractionListener,
+        UtenteFragment.OnFragmentInteractionListener{
 
     FragmentManager manager;
     String mUserID;
@@ -142,7 +144,13 @@ public class HomePage extends AppCompatActivity
 
                     case R.id.niuko:
                        //Toast.makeText(HomePage.this, "Niuko", Toast.LENGTH_SHORT).show();
+                        manager = getSupportFragmentManager();
+                        final FragmentTransaction transaction4 = manager.beginTransaction();
 
+                        final UtenteFragment fragmentP = new UtenteFragment();
+                        //replace perchè alrimenti si sovrappone
+                        transaction4.replace(R.id.container, fragmentP);
+                        transaction4.commit();
                         break;
 
                     case R.id.email:
