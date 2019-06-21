@@ -1,7 +1,7 @@
 package it.stockato.its.myniuko.Pages;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import it.stockato.its.myniuko.R;

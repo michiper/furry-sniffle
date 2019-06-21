@@ -1,17 +1,14 @@
 package it.stockato.its.myniuko.MieiCorsi;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import java.util.List;
-
-import it.stockato.its.myniuko.R;
 
 public class MieiCorsiAdapter extends ArrayAdapter {
 
