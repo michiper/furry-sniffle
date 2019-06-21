@@ -20,11 +20,12 @@ import android.view.Menu;
 import android.widget.Toast;
 
 import it.stockato.its.myniuko.Fragment.CalendarioFragment;
+import it.stockato.its.myniuko.Fragment.MieiCorsiFragment;
 import it.stockato.its.myniuko.Fragment.NiukoFragment;
 import it.stockato.its.myniuko.R;
 
 public class HomePage extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, CalendarioFragment.OnFragmentInteractionListener, NiukoFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CalendarioFragment.OnFragmentInteractionListener, NiukoFragment.OnFragmentInteractionListener, MieiCorsiFragment.OnFragmentInteractionListener {
 
     android.support.v4.app.FragmentManager manager;
 
@@ -71,7 +72,13 @@ public class HomePage extends AppCompatActivity
                         break;
 
                     case R.id.miei_corsi:
-                        Toast.makeText(HomePage.this, "Miei corsi", Toast.LENGTH_SHORT).show();
+                        manager = getSupportFragmentManager();
+                        final FragmentTransaction transaction2 = manager.beginTransaction();
+
+                        final MieiCorsiFragment fragmentMC = new MieiCorsiFragment();
+                        //replace perchè alrimenti si sovrappone
+                        transaction2.replace(R.id.container, fragmentMC);
+                        transaction2.commit();
                         break;
 
                     case R.id.niuko:
