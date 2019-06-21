@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+
+import android.util.Log;
 import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -32,6 +34,7 @@ public class HomePage extends AppCompatActivity
         EmailFragment.OnFragmentInteractionListener {
 
     FragmentManager manager;
+    String mUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,9 @@ public class HomePage extends AppCompatActivity
         setContentView(R.layout.activity_home_page);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mUserID = getIntent().getExtras().getString("id");
+        Log.d("id", "     " + mUserID);
 
         //per far apparire il fragment
         manager = getSupportFragmentManager();

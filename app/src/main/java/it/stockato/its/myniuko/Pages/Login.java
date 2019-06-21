@@ -12,9 +12,14 @@ import android.widget.TextView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 import it.stockato.its.myniuko.DialogFragment;
 import it.stockato.its.myniuko.R;
-/*
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -22,7 +27,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-*/
+
 public class Login extends AppCompatActivity implements DialogFragment.IDialogFragment {
 
 
@@ -60,36 +65,58 @@ public class Login extends AppCompatActivity implements DialogFragment.IDialogFr
                 mEmail = mEmailEditText.getText().toString();
                 mPassword = mPasswordEditText.getText().toString();
 
-
-                // NEED REFACTOR
-
-                /*
-                if(username.isEmpty() || password.isEmpty()){
+                if(mEmail.isEmpty() || mPassword.isEmpty())
+                {
                     DialogFragment vDialog = new DialogFragment("Attenzione","Inserisci tutti i dati necessari.", 1);
                     vDialog.show(getFragmentManager(), "dialog");
-                }else {
-
-                    OkHttpClient client = new OkHttpClient();
+                }
+                else
+                {
+                    OkHttpClient vClient = new OkHttpClient();
                     String url = "http://kennedysql.altervista.org/api_kennedy/login.php";
-                    RequestBody body = new FormBody.Builder().add("email", username).add("password", password).build();
-                    Request request = new Request.Builder().url(url).post(body).build();
-                    client.newCall(request).enqueue(new Callback() {
+                    RequestBody vBody = new FormBody.Builder().add("email", mEmail).add("password", mPassword).build();
+                    Request request = new Request.Builder().url(url).post(vBody).build();
+                    vClient.newCall(request).enqueue(new Callback()
+                    {
                         @Override
-                        public void onFailure(Call call, IOException e) {
+                        public void onFailure(Call call, IOException e)
+                        {
                             e.printStackTrace();
                         }
 
                         @Override
-                        public void onResponse(Call call, final Response response) throws IOException {
-                            if(response.isSuccessful()){
+                        public void onResponse(Call call, final Response response) throws IOException
+                        {
+                            if(response.isSuccessful())
+                            {
                                 final String myResponse = response.body().string();
-                                Login.this.runOnUiThread(new Runnable() {
+                                Login.this.runOnUiThread(new Runnable()
+                                {
                                     @Override
-                                    public void run() {
-                                        try {
+                                    public void run()
+                                    {
+                                        try
+                                        {
                                             JSONObject json = new JSONObject(myResponse);
                                             String ID = json.getString("ID");
-                                            switch (ID){
+                                            if(ID == "-1")
+                                            {
+                                                DialogFragment notSuccess = new DialogFragment("Attenzione", "Impossibile accedere, credenziali errate.", 1);
+                                                notSuccess.show(getFragmentManager(), "dialog");
+                                            }
+                                            else
+                                            {
+                                                Intent mIntent = new Intent(Login.this, HomePage.class);
+                                                Bundle mBundle = new Bundle();
+                                                mBundle.putString("id", String.valueOf(ID));
+                                                mIntent.putExtras(mBundle);
+                                                startActivity(mIntent);
+                                            }
+                                        }
+
+
+                                            /*switch (ID)
+                                            {
                                                 case "1":
                                                     Intent intent = new Intent(Login.this, HomePage.class);
                                                     startActivity(intent);
@@ -104,9 +131,9 @@ public class Login extends AppCompatActivity implements DialogFragment.IDialogFr
                                                     DialogFragment failed = new DialogFragment("Attenzione", "Errore, impossibile eseguire l'operazione.", 1);
                                                     failed.show(getFragmentManager(), "dialog");
                                                     break;
-                                            }
-
-                                        } catch (JSONException e) {
+                                            }*/
+                                        catch (JSONException e)
+                                        {
                                             e.printStackTrace();
                                         }
                                     }
@@ -114,22 +141,9 @@ public class Login extends AppCompatActivity implements DialogFragment.IDialogFr
                             }
                         }
                     });
-                    /*if (username.equals("niuko") && password.equals("psw")) {
-                        Intent intent = new Intent(Login.this, HomePage.class);
-                        startActivity(intent);
-                    } else {
-                        DialogFragment vDialog = new DialogFragment("Attenzione", "Email o password sbagliata", 1);
-                        vDialog.show(getFragmentManager(), "dialog");
-                                        }
-                       //
-
-
-
                 }
-*/
-                Intent intent = new Intent(Login.this, HomePage.class);
-                startActivity(intent);
-
+                //Intent intent = new Intent(Login.this, HomePage.class);
+                //startActivity(intent);
             }
         });
 
