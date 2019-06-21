@@ -17,6 +17,7 @@ import java.io.IOException;
 
 import it.stockato.its.myniuko.DialogFragment;
 import it.stockato.its.myniuko.R;
+/*
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -24,7 +25,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
+*/
 public class Login extends AppCompatActivity implements DialogFragment.IDialogFragment {
     EditText ed_username, ed_password;
     Button btn_login;
@@ -47,6 +48,7 @@ public class Login extends AppCompatActivity implements DialogFragment.IDialogFr
                 username = ed_username.getText().toString();
                 password = ed_password.getText().toString();
 
+                /*
                 if(username.isEmpty() || password.isEmpty()){
                     DialogFragment vDialog = new DialogFragment("Attenzione","Inserisci tutti i dati necessari.", 1);
                     vDialog.show(getFragmentManager(), "dialog");
@@ -104,13 +106,14 @@ public class Login extends AppCompatActivity implements DialogFragment.IDialogFr
                         DialogFragment vDialog = new DialogFragment("Attenzione", "Email o password sbagliata", 1);
                         vDialog.show(getFragmentManager(), "dialog");
                                         }
-                        */
+                       //
 
 
 
                 }
-
-
+*/
+                Intent intent = new Intent(Login.this, HomePage.class);
+                startActivity(intent);
             }
         });
 
