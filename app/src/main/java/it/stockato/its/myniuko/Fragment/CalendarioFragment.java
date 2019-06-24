@@ -1,10 +1,14 @@
 package it.stockato.its.myniuko.Fragment;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import it.stockato.its.myniuko.Alert;
 import it.stockato.its.myniuko.Calendario.CalendarioCorso;
 import it.stockato.its.myniuko.Calendario.Lezioni;
 import it.stockato.its.myniuko.DialogFragment;
@@ -63,6 +68,7 @@ public class CalendarioFragment extends Fragment implements DialogFragment.IDial
     //view del fragment
     CalendarView calendario;
     TextView tv_data, tv_mattina, tv_pomeriggio;
+    FragmentManager fragmentManager;
 
     /**
      * Use this factory method to create a new instance of
@@ -91,6 +97,7 @@ public class CalendarioFragment extends Fragment implements DialogFragment.IDial
         }
 
 
+        fragmentManager = getActivity().getSupportFragmentManager();
         chiamata();
     }
 
@@ -235,8 +242,11 @@ public class CalendarioFragment extends Fragment implements DialogFragment.IDial
                                 ArrayList<JSONObject> arrayList = new ArrayList(jsonArray.length());
 
                                 if(myResponse==null){
+                                    createDialog();
+                                    /*
                                     DialogFragment wrongData = new DialogFragment("Attenzione", "Non ci sono lezioni per te", 1);
                                     wrongData.show(getActivity().getFragmentManager(), "dialog");
+                                    */
                                 }else{
                                     String id,idCorso,idModulo,dataGiorno,oreInizio,oreFine;
                                     String autla,ore, statoGiorno,codiceCorso,titoloCorso;
@@ -310,5 +320,23 @@ public class CalendarioFragment extends Fragment implements DialogFragment.IDial
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    public void createDialog(){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+        builder1.setMessage("Non ci sono lezioni per te");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 }
