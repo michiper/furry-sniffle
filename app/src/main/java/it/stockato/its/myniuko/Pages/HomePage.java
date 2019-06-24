@@ -1,5 +1,6 @@
 package it.stockato.its.myniuko.Pages;
 
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -47,7 +48,9 @@ public class HomePage extends AppCompatActivity
 
     FragmentManager manager;
     public static Utente userLogged;
+    public static Activity activity = null;
     private String mUserID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +59,8 @@ public class HomePage extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //getSupportActionBar().setTitle("MyNiuko");
+        activity = this;
+        getSupportActionBar().setTitle("Calendario");
 
         mUserID = getIntent().getExtras().getString("id");
         userLogged = new Utente();
@@ -132,49 +136,45 @@ public class HomePage extends AppCompatActivity
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch(menuItem.getItemId()){
                     case R.id.calendario:
-                        getSupportActionBar().setTitle("Calendario");
                         //Toast.makeText(HomePage.this, "Calendario", Toast.LENGTH_SHORT).show();
                         manager = getSupportFragmentManager();
                         final FragmentTransaction transaction1 = manager.beginTransaction();
-
                         final CalendarioFragment fragmentC = new CalendarioFragment();
                         //replace perchè alrimenti si sovrappone
                         transaction1.replace(R.id.container, fragmentC);
                         transaction1.commit();
+                        getSupportActionBar().setTitle("Calendario");
                         break;
 
                     case R.id.miei_corsi:
-                        getSupportActionBar().setTitle("I miei corsi");
                         manager = getSupportFragmentManager();
                         final FragmentTransaction transaction2 = manager.beginTransaction();
-
                         final MieiCorsiFragment fragmentMC = new MieiCorsiFragment();
                         //replace perchè alrimenti si sovrappone
                         transaction2.replace(R.id.container, fragmentMC);
                         transaction2.commit();
+                        getSupportActionBar().setTitle("I miei corsi");
                         break;
 
                     case R.id.profilo:
-                        getSupportActionBar().setTitle("Profilo");
                        //Toast.makeText(HomePage.this, "Niuko", Toast.LENGTH_SHORT).show();
                         manager = getSupportFragmentManager();
                         final FragmentTransaction transaction4 = manager.beginTransaction();
-
                         final UtenteFragment fragmentP = new UtenteFragment();
                         //replace perchè alrimenti si sovrappone
                         transaction4.replace(R.id.container, fragmentP);
                         transaction4.commit();
+                        getSupportActionBar().setTitle("Profilo");
                         break;
 
                     case R.id.email:
-                        getSupportActionBar().setTitle("Email");
                         manager = getSupportFragmentManager();
                         final FragmentTransaction transaction3 = manager.beginTransaction();
-
                         final EmailFragment fragmentE = new EmailFragment();
                         //replace perchè alrimenti si sovrappone
                         transaction3.replace(R.id.container, fragmentE);
                         transaction3.commit();
+                        getSupportActionBar().setTitle("Email");
                         break;
                 }
 
@@ -240,5 +240,9 @@ public class HomePage extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    public static void terminaSessione(){
+        activity.finish();
     }
 }

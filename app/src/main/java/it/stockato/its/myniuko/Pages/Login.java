@@ -3,6 +3,7 @@ package it.stockato.its.myniuko.Pages;
 import android.content.Context;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -47,6 +48,7 @@ public class Login extends AppCompatActivity implements DialogFragment.IDialogFr
 
     String mEmail, mPassword;
 
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class Login extends AppCompatActivity implements DialogFragment.IDialogFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        fragmentManager = getSupportFragmentManager();
 
         mEmailEditText = findViewById(R.id.login_email_field);
         mPasswordEditText = findViewById(R.id.login_password_field);
