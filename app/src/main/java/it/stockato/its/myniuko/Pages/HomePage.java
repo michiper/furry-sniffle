@@ -24,7 +24,7 @@ import java.io.IOException;
 
 import it.stockato.its.myniuko.Fragment.CalendarioFragment;
 import it.stockato.its.myniuko.Fragment.EmailFragment;
-import it.stockato.its.myniuko.Fragment.ForemaFragment;
+import it.stockato.its.myniuko.Forema.ForemaFragment;
 import it.stockato.its.myniuko.Fragment.MieiCorsiFragment;
 import it.stockato.its.myniuko.Fragment.UtenteFragment;
 import it.stockato.its.myniuko.R;
@@ -40,7 +40,7 @@ import okhttp3.Response;
 public class HomePage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         CalendarioFragment.OnFragmentInteractionListener,
-        ForemaFragment.OnFragmentInteractionListener,
+        //ForemaFragment.OnFragmentInteractionListener,
         MieiCorsiFragment.OnFragmentInteractionListener,
         EmailFragment.OnFragmentInteractionListener,
         UtenteFragment.OnFragmentInteractionListener{
