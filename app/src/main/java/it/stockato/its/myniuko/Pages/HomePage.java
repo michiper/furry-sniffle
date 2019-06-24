@@ -60,7 +60,7 @@ public class HomePage extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         activity = this;
-        //getSupportActionBar().setTitle("MyNiuko");
+        getSupportActionBar().setTitle("Calendario");
 
         mUserID = getIntent().getExtras().getString("id");
         userLogged = new Utente();
