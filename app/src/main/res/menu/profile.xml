@@ -4,7 +4,7 @@
 
     <item
         android:title="Informazioni"
-        android:icon="@drawable/ic_niuko_white"
+        android:icon="@drawable/ic_forema_white"
         android:id="@+id/btn_pofilo"
         app:showAsAction="ifRoom"
     ></item>
