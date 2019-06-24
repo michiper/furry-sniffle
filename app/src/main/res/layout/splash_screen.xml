@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/white"
     tools:context=".Pages.SplashScreen">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="360dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="192dp"
+        android:layout_height="192dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_niuko_logo" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_forema" />
 </androidx.constraintlayout.widget.ConstraintLayout>

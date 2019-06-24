@@ -1,20 +1,20 @@
 package it.stockato.its.myniuko.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import it.stockato.its.myniuko.Pages.HomePage;
+import it.stockato.its.myniuko.Pages.Login;
 import it.stockato.its.myniuko.R;
 
 /**
@@ -35,7 +35,8 @@ public class UtenteFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    TextView userNameTextView, userSurnameTextView, userMailTextView;
+    TextView userTextView, userMailTextView;
+    Button logoutButton;
 
     private OnFragmentInteractionListener mListener;
 
@@ -79,13 +80,21 @@ public class UtenteFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_utente, container, false);
 
-        userNameTextView = view.findViewById(R.id.userNameTextView);
-        userSurnameTextView = view.findViewById(R.id.userSurnameTextView);
+        userTextView = view.findViewById(R.id.userTextView);
         userMailTextView = view.findViewById(R.id.userMailTextView);
 
-        userNameTextView.setText(HomePage.userLogged.getNome());
-        userSurnameTextView.setText(HomePage.userLogged.getCognome());
+        userTextView.setText(HomePage.userLogged.getNome() + " " + HomePage.userLogged.getCognome());
         userMailTextView.setText(HomePage.userLogged.getEmail());
+
+        logoutButton = view.findViewById(R.id.logoutButton);
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HomePage.terminaSessione();
+                //Intent intent = new Intent(HomePage.class, Login.class);
+            }
+        });
 
         return view;
 

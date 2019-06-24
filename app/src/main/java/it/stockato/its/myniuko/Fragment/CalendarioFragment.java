@@ -241,13 +241,9 @@ public class CalendarioFragment extends Fragment implements DialogFragment.IDial
                                 ArrayList<CalendarioCorso> list = new ArrayList<CalendarioCorso>();
                                 ArrayList<JSONObject> arrayList = new ArrayList(jsonArray.length());
 
-                                if(arrayList.size()==0){
-/*
-                                    DialogFragment wrongData = new DialogFragment("Attenzione", "Non ci sono lezioni per te", 1, getActivity());
-                                    wrongData.show( getActivity().getFragmentManager(), "dialog");
-                                  */
-                                    createDialog();
-
+                                if(myResponse==null){
+                                    DialogFragment wrongData = new DialogFragment("Attenzione", "Non ci sono lezioni per te", 1);
+                                    wrongData.show(getActivity().getFragmentManager(), "dialog");
                                 }else{
                                     String id,idCorso,idModulo,dataGiorno,oreInizio,oreFine;
                                     String autla,ore, statoGiorno,codiceCorso,titoloCorso;
