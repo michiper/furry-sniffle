@@ -44,7 +44,7 @@ import okhttp3.Response;
  * Use the {@link CalendarioFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CalendarioFragment extends Fragment  {
+public class CalendarioFragment extends Fragment implements DialogFragment.IDialogFragment  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -234,7 +234,7 @@ public class CalendarioFragment extends Fragment  {
                                 ArrayList<CalendarioCorso> list = new ArrayList<CalendarioCorso>();
                                 ArrayList<JSONObject> arrayList = new ArrayList(jsonArray.length());
 
-                                if(arrayList.size()==0){
+                                if(myResponse==null){
                                     DialogFragment wrongData = new DialogFragment("Attenzione", "Non ci sono lezioni per te", 1);
                                     wrongData.show(getActivity().getFragmentManager(), "dialog");
                                 }else{
@@ -289,6 +289,11 @@ public class CalendarioFragment extends Fragment  {
                 }
             }
         });
+    }
+
+    @Override
+    public void onResponse(boolean response) {
+
     }
 
 
