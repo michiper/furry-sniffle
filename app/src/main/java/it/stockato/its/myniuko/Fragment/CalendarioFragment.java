@@ -105,7 +105,7 @@ public class CalendarioFragment extends Fragment implements DialogFragment.IDial
 
 
 
-        //chiamata();
+        chiamataModulo();
     }
 
     @Override
