@@ -15,9 +15,9 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-
-        app:itemIconTint="@color/icon_primary"
-        app:itemTextColor="@color/text_primary"
+        app:labelVisibilityMode="labeled"
+        app:itemIconTint="@xml/bottom_bar_icon_selector"
+        app:itemTextColor="@xml/bottom_bar_text_selector"
         app:menu="@menu/bottom_navigation_main"
         android:background="@color/white"
         app:elevation="16dp" />
