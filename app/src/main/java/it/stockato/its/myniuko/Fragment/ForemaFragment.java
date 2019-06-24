@@ -13,12 +13,12 @@ import it.stockato.its.myniuko.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link NiukoFragment.OnFragmentInteractionListener} interface
+ * {@link ForemaFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link NiukoFragment#newInstance} factory method to
+ * Use the {@link ForemaFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NiukoFragment extends Fragment  {
+public class ForemaFragment extends Fragment  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -32,7 +32,7 @@ public class NiukoFragment extends Fragment  {
 
 
 
-    public NiukoFragment() {
+    public ForemaFragment() {
         // Required empty public constructor
     }
 
@@ -42,11 +42,11 @@ public class NiukoFragment extends Fragment  {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment NiukoFragment.
+     * @return A new instance of fragment ForemaFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static NiukoFragment newInstance(String param1, String param2) {
-        NiukoFragment fragment = new NiukoFragment();
+    public static ForemaFragment newInstance(String param1, String param2) {
+        ForemaFragment fragment = new ForemaFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,7 +70,7 @@ public class NiukoFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_niuko, container, false);
+        return inflater.inflate(R.layout.fragment_forema, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
