@@ -32,7 +32,7 @@ import it.stockato.its.myniuko.Calendario.ModuloCorso;
 import it.stockato.its.myniuko.DialogFragment;
 import it.stockato.its.myniuko.Fragment.CalendarioFragment;
 import it.stockato.its.myniuko.Fragment.EmailFragment;
-import it.stockato.its.myniuko.Fragment.ForemaFragment;
+import it.stockato.its.myniuko.Forema.ForemaFragment;
 import it.stockato.its.myniuko.Fragment.MieiCorsiFragment;
 import it.stockato.its.myniuko.Fragment.UtenteFragment;
 import it.stockato.its.myniuko.R;
@@ -49,7 +49,7 @@ public class HomePage extends AppCompatActivity
         implements DialogFragment.IDialogFragment,
         NavigationView.OnNavigationItemSelectedListener,
         CalendarioFragment.OnFragmentInteractionListener,
-        ForemaFragment.OnFragmentInteractionListener,
+        //ForemaFragment.OnFragmentInteractionListener,
         MieiCorsiFragment.OnFragmentInteractionListener,
         EmailFragment.OnFragmentInteractionListener,
         UtenteFragment.OnFragmentInteractionListener{
@@ -73,7 +73,7 @@ public class HomePage extends AppCompatActivity
         getSupportActionBar().setTitle("Calendario");
 
         activity = this;
-        //getSupportActionBar().setTitle("MyNiuko");
+        getSupportActionBar().setTitle("Calendario");
 
         fragmentManager = getSupportFragmentManager();
         listCalendarioCorso = new ArrayList<>();

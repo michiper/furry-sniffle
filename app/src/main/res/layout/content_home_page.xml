@@ -16,10 +16,11 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
 
-        app:itemIconTint="@color/colorAccent"
+        app:itemIconTint="@color/icon_primary"
+        app:itemTextColor="@color/text_primary"
         app:menu="@menu/bottom_navigation_main"
         android:background="@color/white"
-        app:elevation="16dp"/>
+        app:elevation="16dp" />
 
 </RelativeLayout>
 

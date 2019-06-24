@@ -1,79 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Fragment.ForemaFragment">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:paddingBottom="72dp">>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:minHeight="100dp"
+            app:cardCornerRadius="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/textView5"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Informazioni"
-                    android:textColor="#09090A"
-                    android:textSize="18sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="4dp"
-                    android:orientation="horizontal"
-                    android:weightSum="10">
-
-                    <ImageView
-                        android:id="@+id/imageView3"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="4"
-                        android:src="@drawable/ic_menu_gallery" />
+                    android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/tv_mattina"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:gravity="center_vertical"
-                        android:text="Corsi in partenza"
-                        android:textColor="#AE050404"
-                        android:textSize="18sp" />
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/forema_info_title"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_om"
+                    <ListView
+                        android:id="@+id/forema_info_listview"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="8dp"
-                        android:layout_weight="4"
-                        android:foregroundGravity="center_vertical|center"
-                        android:gravity="right|center_vertical"
-                        android:text=">"
-                        android:textSize="18sp" />
+                        android:layout_height="280dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:divider="@null"
+                        android:dividerHeight="0dp"
+                        android:scrollbars="none"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="4dp"
-                    android:orientation="horizontal"
-                    android:weightSum="10">
+        </com.google.android.material.card.MaterialCardView>
 
                     <ImageView
                         android:id="@+id/imageView4"
@@ -94,7 +83,7 @@
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/tv_op"
+                        android:id="@+id/textView10"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginRight="8dp"
@@ -225,173 +214,51 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:minHeight="100dp"
+            app:cardCornerRadius="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="match_parent"
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Contatti"
-                    android:textColor="#09090A"
-                    android:textSize="18sp" />
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/forema_contacts_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
+                <ListView
+                    android:id="@+id/forema_contacts_listview"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="4dp"
-                    android:orientation="horizontal"
-                    android:weightSum="10">
+                    android:layout_height="256dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    android:scrollbars="none"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <ImageView
-                        android:id="@+id/imageView5"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="8"
-                        android:src="@drawable/ic_menu_manage" />
+        </com.google.android.material.card.MaterialCardView>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/textView34"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Telefono"
-                            android:textColor="#AE050404"
-                            android:textSize="18sp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <TextView
-                            android:id="@+id/textView14"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="320 388 0288"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="6dp"
-                    android:orientation="horizontal"
-                    android:weightSum="10">
-
-                    <ImageView
-                        android:id="@+id/imageView57"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="8"
-                        android:src="@drawable/ic_menu_manage" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textView37"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Email."
-                            android:textColor="#AE050404"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/textView16"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="info@niuko.it"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="6dp"
-                    android:orientation="horizontal"
-                    android:weightSum="10">
-
-                    <ImageView
-                        android:id="@+id/imageView51"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="8"
-                        android:src="@drawable/ic_menu_manage" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textView35"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Richiesta info"
-                            android:textColor="#AE050404"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/textView156"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="6dp"
-                    android:orientation="horizontal"
-                    android:weightSum="10">
-
-                    <ImageView
-                        android:id="@+id/imageView50"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="8"
-                        android:src="@drawable/ic_menu_manage" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textView314"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Newsletter"
-                            android:textColor="#AE050404"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/textView44"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
-
-</FrameLayout>
+</androidx.core.widget.NestedScrollView>
