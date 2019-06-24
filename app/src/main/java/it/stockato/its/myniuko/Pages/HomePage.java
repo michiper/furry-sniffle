@@ -1,6 +1,5 @@
 package it.stockato.its.myniuko.Pages;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -9,9 +8,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.view.GravityCompat;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 
-import android.util.Log;
 import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -19,18 +16,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-import it.stockato.its.myniuko.DialogFragment;
 import it.stockato.its.myniuko.Fragment.CalendarioFragment;
 import it.stockato.its.myniuko.Fragment.EmailFragment;
+import it.stockato.its.myniuko.Fragment.ForemaFragment;
 import it.stockato.its.myniuko.Fragment.MieiCorsiFragment;
-import it.stockato.its.myniuko.Fragment.NiukoFragment;
 import it.stockato.its.myniuko.Fragment.UtenteFragment;
 import it.stockato.its.myniuko.R;
 import it.stockato.its.myniuko.Utente.Utente;
@@ -45,7 +40,7 @@ import okhttp3.Response;
 public class HomePage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         CalendarioFragment.OnFragmentInteractionListener,
-        NiukoFragment.OnFragmentInteractionListener,
+        ForemaFragment.OnFragmentInteractionListener,
         MieiCorsiFragment.OnFragmentInteractionListener,
         EmailFragment.OnFragmentInteractionListener,
         UtenteFragment.OnFragmentInteractionListener{
@@ -61,7 +56,7 @@ public class HomePage extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("MyNiuko");
+        //getSupportActionBar().setTitle("MyNiuko");
 
         mUserID = getIntent().getExtras().getString("id");
         userLogged = new Utente();
@@ -137,6 +132,7 @@ public class HomePage extends AppCompatActivity
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch(menuItem.getItemId()){
                     case R.id.calendario:
+                        getSupportActionBar().setTitle("Calendario");
                         //Toast.makeText(HomePage.this, "Calendario", Toast.LENGTH_SHORT).show();
                         manager = getSupportFragmentManager();
                         final FragmentTransaction transaction1 = manager.beginTransaction();
@@ -148,6 +144,7 @@ public class HomePage extends AppCompatActivity
                         break;
 
                     case R.id.miei_corsi:
+                        getSupportActionBar().setTitle("I miei corsi");
                         manager = getSupportFragmentManager();
                         final FragmentTransaction transaction2 = manager.beginTransaction();
 
@@ -157,7 +154,8 @@ public class HomePage extends AppCompatActivity
                         transaction2.commit();
                         break;
 
-                    case R.id.niuko:
+                    case R.id.profilo:
+                        getSupportActionBar().setTitle("Profilo");
                        //Toast.makeText(HomePage.this, "Niuko", Toast.LENGTH_SHORT).show();
                         manager = getSupportFragmentManager();
                         final FragmentTransaction transaction4 = manager.beginTransaction();
@@ -169,6 +167,7 @@ public class HomePage extends AppCompatActivity
                         break;
 
                     case R.id.email:
+                        getSupportActionBar().setTitle("Email");
                         manager = getSupportFragmentManager();
                         final FragmentTransaction transaction3 = manager.beginTransaction();
 
@@ -212,12 +211,13 @@ public class HomePage extends AppCompatActivity
         if (item.getItemId() == R.id.btn_pofilo){
             //per far apparire il fragment
             manager = getSupportFragmentManager();
-            final FragmentTransaction transaction = manager.beginTransaction();
 
-            final NiukoFragment fragmentN = new NiukoFragment();
+            final FragmentTransaction transaction = manager.beginTransaction();
+            final ForemaFragment fragmentN = new ForemaFragment();
             //replace perchè alrimenti si sovrappone
             transaction.replace(R.id.container, fragmentN);
             transaction.commit();
+            getSupportActionBar().setTitle("Informazioni");
         }
 
         return super.onOptionsItemSelected(item);

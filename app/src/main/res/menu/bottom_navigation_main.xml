@@ -13,7 +13,7 @@
         android:title="Miei corsi"/>
 
     <item
-        android:id="@+id/niuko"
+        android:id="@+id/profilo"
         android:enabled="true"
         android:icon="@drawable/ic_person_black_24dp"
         android:title="Profilo"/>
