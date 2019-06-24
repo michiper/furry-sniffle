@@ -31,11 +31,13 @@ import it.stockato.its.myniuko.Alert;
 import it.stockato.its.myniuko.Calendario.CalendarioCorso;
 
 import it.stockato.its.myniuko.Calendario.Lezione;
+import it.stockato.its.myniuko.Calendario.Modulo;
 import it.stockato.its.myniuko.Calendario.ModuloCorso;
 import it.stockato.its.myniuko.DialogFragment;
 import it.stockato.its.myniuko.Pages.HomePage;
 import it.stockato.its.myniuko.Pages.Login;
 import it.stockato.its.myniuko.R;
+import it.stockato.its.myniuko.Utente.Utente;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -72,6 +74,7 @@ public class CalendarioFragment extends Fragment implements DialogFragment.IDial
     CalendarView calendario;
     TextView tv_data, tv_mattina, tv_pomeriggio, tv_om, tv_op;
     ArrayList<Lezione> listaLezioni;
+    ArrayList<Modulo> listaModuli;
 
 
     /**
@@ -124,6 +127,7 @@ public class CalendarioFragment extends Fragment implements DialogFragment.IDial
         tv_data.setText(selectedDate);
 
         listaLezioni = HomePage.listLezioni;
+        listaModuli = new ArrayList<>();
 
         calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
@@ -262,51 +266,27 @@ public class CalendarioFragment extends Fragment implements DialogFragment.IDial
                         {
                             try
                             {
-                                JSONArray jsonArray = new JSONArray(myResponse);
-                                Log.d("MODULO", "response "+myResponse);
-
-                                ArrayList<JSONObject> arrayList = new ArrayList(jsonArray.length());
+                                JSONObject jsonObject = new JSONObject(myResponse);
 
                                 if(myResponse==null){
 
                                     Toast.makeText(getContext(),"fail data",Toast.LENGTH_SHORT).show();
 
                                 }else{
-                                    String id,CodiceCorso,TitoloCorso,DescrizioneCorso,TotOreCorso,QRCorso;
-                                    String oreMin, dataInizioAtt, dataFineAtt, StatoCorso, CodiceModulo;
-                                    String TitoloModulo, DescrizioneModulo, TotOreModulo, IDCorso;
 
-                                    for(int i=0;i < jsonArray.length();i++){
-                                        arrayList.add(jsonArray.getJSONObject(i));
-                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                        id = jsonObject.getString("ID");
-                                        CodiceCorso = jsonObject.getString("CodiceCorso");
-                                        TitoloCorso = jsonObject.getString("TitoloCorso");
-                                        DescrizioneCorso = jsonObject.getString("DescrizioneCorso");
-                                        TotOreCorso = jsonObject.getString("TotOreCorso");
-                                        QRCorso = jsonObject.getString("QRCorso");
-                                        oreMin = jsonObject.getString("OreMin");
-                                        dataInizioAtt = jsonObject.getString("DataInizioAtt");
-                                        dataFineAtt = jsonObject.getString("DataFineAtt");
-                                        StatoCorso = jsonObject.getString("StatoCorso");
-                                        CodiceModulo = jsonObject.getString("CodiceModulo");
-                                        TitoloModulo = jsonObject.getString("TitoloModulo");
-                                        DescrizioneModulo = jsonObject.getString("DescrizioneModulo");
-                                        TotOreModulo = jsonObject.getString("TotOreModulo");
-                                        IDCorso = jsonObject.getString("IDCorso");
+                                    String id,CodiceModulo,TitoloModulo,DescrizioneModulo,TotOreModulo,IDCorso;
 
+                                    id = jsonObject.getString("ID");
+                                    CodiceModulo = jsonObject.getString("CodiceModulo");
+                                    TitoloModulo = jsonObject.getString("TitoloModulo");
+                                    DescrizioneModulo = jsonObject.getString("DescrizioneModulo");
+                                    TotOreModulo = jsonObject.getString("TotOreModulo");
+                                    IDCorso = jsonObject.getString("IDCorso");
 
-                                        ModuloCorso moduloCorso = new ModuloCorso(id, CodiceCorso,TitoloCorso,DescrizioneCorso,TotOreCorso,
-                                                QRCorso,oreMin, dataInizioAtt,dataFineAtt,StatoCorso,
-                                                CodiceModulo,TitoloModulo,DescrizioneModulo,TotOreModulo,IDCorso);
+                                    Modulo modulo = new Modulo(id, CodiceModulo,TitoloModulo,DescrizioneModulo,TotOreModulo,IDCorso);
 
-                                       // listModuloCorso.add(moduloCorso);
-
-                                    }
-
+                                    Toast.makeText(getContext(),""+modulo.getTitoloModulo(),Toast.LENGTH_SHORT).show();
                                 }
-
-
                             }
                             catch (JSONException e)
                             {
