@@ -1,5 +1,6 @@
 package it.stockato.its.myniuko.Pages;
 
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -47,7 +48,9 @@ public class HomePage extends AppCompatActivity
 
     FragmentManager manager;
     public static Utente userLogged;
+    public static Activity activity = null;
     private String mUserID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,7 @@ public class HomePage extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        activity = this;
         //getSupportActionBar().setTitle("MyNiuko");
 
         mUserID = getIntent().getExtras().getString("id");
@@ -240,5 +244,9 @@ public class HomePage extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    public static void terminaSessione(){
+        activity.finish();
     }
 }

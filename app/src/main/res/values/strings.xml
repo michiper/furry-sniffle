@@ -12,6 +12,7 @@
     <string name="login_forgotten_password">Did you forgot the password?</string>
 
     <string name="login_login_button">Login</string>
+    <string name="logout_logout_button">Logout</string>
 
 
     <!-- Miei corsi -->
