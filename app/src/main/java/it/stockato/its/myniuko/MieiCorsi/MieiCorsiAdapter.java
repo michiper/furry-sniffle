@@ -7,8 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.List;
+
+import it.stockato.its.myniuko.R;
 
 public class MieiCorsiAdapter extends ArrayAdapter {
 
@@ -26,8 +30,23 @@ public class MieiCorsiAdapter extends ArrayAdapter {
 
     @Override //getView è un metodo della classe ArrayAdapter, converte ogni singola view
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
         //return super.getView(position, convertView, parent);
         convertView = LayoutInflater.from(ctx).inflate(resID, null);
+
+
+        TextView vCourseName = convertView.findViewById(R.id.course_name);
+        TextView vCourseProgressTextView = convertView.findViewById(R.id.course_progress_tv);
+
+        ProgressBar vProgressBar = convertView.findViewById(R.id.course_progress);
+
+
+        MieiCorsi vCorso = list_corsi.get(position);
+
+        vCourseName.setText(vCorso.getName());
+        vCourseProgressTextView.setText(getContext().getText(R.string.course_progress) + (vCorso.getProgress() + "") + "%");
+
+        vProgressBar.setProgress(vCorso.getProgress());
 
         /*
         TextView textViewNome = convertView.findViewById(R.id.tv_nome);

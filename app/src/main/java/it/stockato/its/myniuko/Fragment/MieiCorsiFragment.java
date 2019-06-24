@@ -76,7 +76,8 @@ public class MieiCorsiFragment extends Fragment {
         listView = view.findViewById(R.id.listview_mieicorsi);
         //adapter
         ArrayList<MieiCorsi> listaCorsi = new ArrayList<>();
-        listaCorsi.add(new MieiCorsi("App Mobile"));
+        listaCorsi.add(new MieiCorsi("App Mobile", 60, new String[] {"UC1", "UC2"}));
+        listaCorsi.add(new MieiCorsi("Sviluppo Web", 35, new String[] {"UC1", "UC2", "UC3", "Approfondimento"}));
         //listaCorsi.add(new MieiCorsi("App Mobile"));
         MieiCorsiAdapter adapter = new MieiCorsiAdapter(getContext(), R.layout.mieicorsi_cell, listaCorsi);
         listView.setAdapter(adapter);
