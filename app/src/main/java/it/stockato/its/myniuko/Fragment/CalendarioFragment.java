@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import it.stockato.its.myniuko.Alert;
+import it.stockato.its.myniuko.Calendario.CalendarByIdCourse;
 import it.stockato.its.myniuko.Calendario.CalendarioCorso;
 
 import it.stockato.its.myniuko.Calendario.Lezione;
@@ -73,7 +74,7 @@ public class CalendarioFragment extends Fragment implements DialogFragment.IDial
     //view del fragment
     CalendarView calendario;
     TextView tv_data, tv_mattina, tv_pomeriggio, tv_om, tv_op;
-    ArrayList<Lezione> listaLezioni;
+    ArrayList<CalendarByIdCourse> listaLezioni;
     ArrayList<Modulo> listaModuli;
 
 
@@ -104,9 +105,8 @@ public class CalendarioFragment extends Fragment implements DialogFragment.IDial
         }
 
 
-
-        chiamataModulo();
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -126,8 +126,13 @@ public class CalendarioFragment extends Fragment implements DialogFragment.IDial
         String selectedDate = sdf.format(new Date(calendario.getDate()));
         tv_data.setText(selectedDate);
 
-        listaLezioni = HomePage.listLezioni;
+        listaLezioni = new ArrayList<>();
         listaModuli = new ArrayList<>();
+
+        chiamataCalendario();
+        chiamataModuliCorso();
+
+
 
         calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
@@ -151,18 +156,23 @@ public class CalendarioFragment extends Fragment implements DialogFragment.IDial
 
 
 
+        for(int i=0; i<listaLezioni.size();i++){
+            CalendarByIdCourse c = listaLezioni.get(i);
+
+        }
+
 
         return view;
     }
 
 
-    public void lezioni(String data, ArrayList<Lezione> list){
+    public void lezioni(String data, ArrayList<CalendarByIdCourse> list){
 
-        ArrayList<Lezione> leziones = new ArrayList<>();
+        ArrayList<CalendarByIdCourse> leziones = new ArrayList<>();
         for(int i=0; i<list.size();i++){
-            Lezione l = list.get(i);
+            CalendarByIdCourse l = list.get(i);
             String d = l.getDataGiorno();
-            //Toast.makeText(getContext(), list.get(i).getOreFine(), Toast.LENGTH_SHORT).show();
+
             if(d.equals(data)){
                 leziones.add(l);
             }else{
@@ -173,13 +183,17 @@ public class CalendarioFragment extends Fragment implements DialogFragment.IDial
             }
         }
         for(int i=0; i<leziones.size();i++){
-            Lezione lezione = leziones.get(i);
+            CalendarByIdCourse lezione = leziones.get(i);
+
             if(lezione.getOreInizio().equals("9")){
                 tv_om.setText(lezione.getOreFine() + " - " + lezione.getOreInizio());
-                tv_mattina.setText("lezione");
+                tv_mattina.setText(lezione.getTitoloModulo());
+
+
+
             }else{
                 tv_op.setText(lezione.getOreFine() + " - " + lezione.getOreInizio());
-                tv_pomeriggio.setText("lezione");
+                tv_pomeriggio.setText(lezione.getTitoloModulo());
             }
         }
     }
@@ -236,28 +250,28 @@ public class CalendarioFragment extends Fragment implements DialogFragment.IDial
 
 
 
-    public void chiamataModulo(){
-        Log.d("MODULO", "chiamata");
+    public void chiamataCalendario(){
+        Log.d("CALENDARIO", "chiamata");
         OkHttpClient vClient = new OkHttpClient();
-        String url = "http://kennedysql.altervista.org/api_kennedy/getModule.php";
-        RequestBody vBody = new FormBody.Builder().add("ID", "1").build(); //devo mandare l'id del corso
+        String url = "http://kennedysql.altervista.org/api_kennedy/calendarByIdCoure.php";
+        RequestBody vBody = new FormBody.Builder().add("ID", "1").build(); //devo mandare l'id del corso (ID=1)
         Request vRequest = new Request.Builder().url(url).post(vBody).build();
         vClient.newCall(vRequest).enqueue(new Callback()
         {
             @Override
             public void onFailure(Call call, IOException e)
             {
-                Log.d("MODULO", "fail ");
+                Log.d("CALENDARIO", "fail ");
                 e.printStackTrace();
             }
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException
             {
-                Log.d("MODULO", "response");
+                Log.d("CALENDARIO", "response");
                 if(response.isSuccessful())
                 {
-                    Log.d("MODULO", "response success");
+                    Log.d("CALENDARIO", "response success");
                     final String myResponse = response.body().string();
                     getActivity().runOnUiThread(new Runnable()
                     {
@@ -266,31 +280,41 @@ public class CalendarioFragment extends Fragment implements DialogFragment.IDial
                         {
                             try
                             {
-                                JSONObject jsonObject = new JSONObject(myResponse);
+                                JSONArray jsonArray = new JSONArray(myResponse);
+                                Log.d("CALENDARIO", "response "+myResponse);
 
-                                if(myResponse==null){
+                                ArrayList<JSONObject> arrayList = new ArrayList(jsonArray.length());
 
-                                    Toast.makeText(getContext(),"fail data",Toast.LENGTH_SHORT).show();
-
+                                if(myResponse.equals("null")){
+/*
+                                    DialogFragment wrongData = new DialogFragment("Attenzione", "Non ci sono lezioni per te 2", 1);
+                                    wrongData.show(getActivity().getFragmentManager(), "dialog");
+*/
                                 }else{
+                                    String ID, IDCorso, IDModulo, DataGiorno, OreInizio, OreFine, Aula, Ore, StatoGiorno;
 
-                                    String id,CodiceModulo,TitoloModulo,DescrizioneModulo,TotOreModulo,IDCorso;
+                                    for(int i=0;i < jsonArray.length();i++){
+                                        arrayList.add(jsonArray.getJSONObject(i));
+                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                        ID = jsonObject.getString("ID");
+                                        IDCorso = jsonObject.getString("IDCorso");
+                                        IDModulo = jsonObject.getString("IDModulo");
+                                        DataGiorno = jsonObject.getString("DataGiorno");
+                                        OreInizio = jsonObject.getString("OreInizio");
+                                        OreFine = jsonObject.getString("OreFine");
+                                        Aula = jsonObject.getString("Aula");
+                                        Ore = jsonObject.getString("Ore");
+                                        StatoGiorno = jsonObject.getString("StatoGiorno");
 
-                                    id = jsonObject.getString("ID");
-                                    CodiceModulo = jsonObject.getString("CodiceModulo");
-                                    TitoloModulo = jsonObject.getString("TitoloModulo");
-                                    DescrizioneModulo = jsonObject.getString("DescrizioneModulo");
-                                    TotOreModulo = jsonObject.getString("TotOreModulo");
-                                    IDCorso = jsonObject.getString("IDCorso");
+                                        CalendarByIdCourse calendarByIdCourse = new CalendarByIdCourse(ID, IDCorso, IDModulo, DataGiorno, OreInizio, OreFine, Aula, Ore,StatoGiorno, "Titolo modulo");
+                                        listaLezioni.add(calendarByIdCourse);
 
-                                    Modulo modulo = new Modulo(id, CodiceModulo,TitoloModulo,DescrizioneModulo,TotOreModulo,IDCorso);
-
-                                    Toast.makeText(getContext(),""+modulo.getTitoloModulo(),Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
                             catch (JSONException e)
                             {
-                                Log.d("MODULO", "exception: "+e.getMessage());
+                                Log.d("CALENDARIO", "exception: "+e.getMessage());
                                 e.printStackTrace();
                             }
                         }
@@ -298,6 +322,90 @@ public class CalendarioFragment extends Fragment implements DialogFragment.IDial
                 }
             }
         });
+    }
+
+
+    public void chiamataModuliCorso(){
+        Log.d("MODULI", "chiamata");
+        OkHttpClient vClient = new OkHttpClient();
+        String url = "http://kennedysql.altervista.org/api_kennedy/getModulesByIdCourse.php";
+        RequestBody vBody = new FormBody.Builder().add("ID", "1").build(); //devo mandare l'id del corso (ID=1)
+        Request vRequest = new Request.Builder().url(url).post(vBody).build();
+        vClient.newCall(vRequest).enqueue(new Callback()
+        {
+            @Override
+            public void onFailure(Call call, IOException e)
+            {
+                Log.d("MODULI", "fail ");
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException
+            {
+                Log.d("MODULI", "response");
+                if(response.isSuccessful())
+                {
+                    Log.d("MODULI", "response success");
+                    final String myResponse = response.body().string();
+                    getActivity().runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            try
+                            {
+                                JSONArray jsonArray = new JSONArray(myResponse);
+                                Log.d("MODULI", "response "+myResponse);
+
+                                ArrayList<JSONObject> arrayList = new ArrayList(jsonArray.length());
+                                //  Toast.makeText(getContext(),""+lezione.getIDModulo()+modulo.getId(),Toast.LENGTH_SHORT).show();
+                                if(myResponse.equals("null")){
+
+                                    /*DialogFragment wrongData = new DialogFragment("Attenzione", "Non ci sono moduli per te 2", 1);
+                                    wrongData.show(getFragmentManager(), "dialog");
+*/
+                                }else{
+                                    String ID, CodiceModulo, TitoloModulo, DescrizioneModulo, TotOreModulo, IDCorso;
+
+                                    for(int i=0;i < jsonArray.length();i++){
+                                        arrayList.add(jsonArray.getJSONObject(i));
+                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                        ID = jsonObject.getString("ID");
+                                        CodiceModulo = jsonObject.getString("CodiceModulo");
+                                        TitoloModulo = jsonObject.getString("TitoloModulo");
+                                        DescrizioneModulo = jsonObject.getString("DescrizioneModulo");
+                                        TotOreModulo = jsonObject.getString("TotOreModulo");
+                                        IDCorso = jsonObject.getString("IDCorso");
+
+                                        Modulo modulo = new Modulo(ID,CodiceModulo,TitoloModulo,DescrizioneModulo,TotOreModulo,IDCorso);
+                                        listaModuli.add(modulo);
+
+                                        for(int l=0; l<listaLezioni.size(); l++){
+                                            CalendarByIdCourse c = listaLezioni.get(l);
+                                            if( c.getIDModulo().equals(listaModuli.get(i).getId())){
+                                                c.setTitoloModulo(listaModuli.get(i).getTitoloModulo());
+                                                Log.d("BOH", "run: "+i+"   "+l);
+                                            }
+                                        }
+
+                                    }
+
+
+                                }
+                            }
+                            catch (JSONException e)
+                            {
+                                Log.d("MODULI", "exception: "+e.getMessage());
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+
     }
 
 /*

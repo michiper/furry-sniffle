@@ -18,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,8 +27,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import it.stockato.its.myniuko.Calendario.CalendarByIdCourse;
 import it.stockato.its.myniuko.Calendario.CalendarioCorso;
 import it.stockato.its.myniuko.Calendario.Lezione;
+import it.stockato.its.myniuko.Calendario.Modulo;
 import it.stockato.its.myniuko.Calendario.ModuloCorso;
 import it.stockato.its.myniuko.DialogFragment;
 import it.stockato.its.myniuko.Fragment.CalendarioFragment;
@@ -59,9 +62,10 @@ public class HomePage extends AppCompatActivity
     public static Activity activity = null;
     private String mUserID;
     FragmentManager fragmentManager;
-    ArrayList<CalendarioCorso> listCalendarioCorso;
-    ArrayList<ModuloCorso> listModuloCorso;
-    public static  ArrayList<Lezione> listLezioni;
+  //  ArrayList<CalendarioCorso> listCalendarioCorso;
+  //  ArrayList<ModuloCorso> listModuloCorso;
+    public static  ArrayList<CalendarByIdCourse> listaLezioni;
+    public static ArrayList<Modulo> listModuli;
 
 
     @Override
@@ -76,9 +80,10 @@ public class HomePage extends AppCompatActivity
         getSupportActionBar().setTitle("Calendario");
 
         fragmentManager = getSupportFragmentManager();
-        listCalendarioCorso = new ArrayList<>();
-        listModuloCorso = new ArrayList<>();
-        listLezioni = new ArrayList<>();
+        //listCalendarioCorso = new ArrayList<>();
+        //listModuloCorso = new ArrayList<>();
+        listaLezioni = new ArrayList<>();
+        listModuli = new ArrayList<>();
 
         if(getIntent().getExtras() != null) {
             mUserID = getIntent().getExtras().getString("id");
@@ -87,9 +92,11 @@ public class HomePage extends AppCompatActivity
         }
 
         //chiamate
-        chiamataCorso();
+       // chiamataCorso();
        // chiamataModulo();
         chiamataDatiUtente();
+       // chiamataCalendario();
+       // chiamataModuliCorso();
 
 
         //per far apparire il fragment
@@ -278,6 +285,10 @@ public class HomePage extends AppCompatActivity
 
 
 
+
+
+    /*
+
     public void chiamataCorso(){
         Log.d("CORSO", "chiamata");
         OkHttpClient vClient = new OkHttpClient();
@@ -444,6 +455,8 @@ public class HomePage extends AppCompatActivity
                                                 CodiceModulo,TitoloModulo,DescrizioneModulo,TotOreModulo,IDCorso);
 
                                         listModuloCorso.add(moduloCorso);
+                                        listModuli.add(new Modulo(id,CodiceModulo,TitoloModulo,DescrizioneModulo,TotOreModulo,IDCorso));
+
 
                                     }
 
@@ -462,6 +475,24 @@ public class HomePage extends AppCompatActivity
             }
         });
     }
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public void onResponse(boolean response) {

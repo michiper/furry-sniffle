@@ -2,6 +2,8 @@ package it.stockato.its.myniuko.Calendario;
 
 public class Modulo {
 
+    //[{"ID":"1","CodiceModulo":"MOD_INGLESE","TitoloModulo":"inglese","DescrizioneModulo":"bla bla","TotOreModulo":"40","IDCorso":"1"}
+
     String id,CodiceModulo,TitoloModulo,DescrizioneModulo,TotOreModulo,IDCorso;
 
 

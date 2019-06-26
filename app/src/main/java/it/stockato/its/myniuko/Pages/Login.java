@@ -59,7 +59,9 @@ public class Login extends AppCompatActivity implements DialogFragment.IDialogFr
         fragmentManager = getSupportFragmentManager();
 
         mEmailEditText = findViewById(R.id.login_email_field);
+        mEmailEditText.setText("sarah@gmail.com");
         mPasswordEditText = findViewById(R.id.login_password_field);
+        mPasswordEditText.setText("password");
 
         mRememberPassword = findViewById(R.id.login_remember_password);
         mForgottenPassword = findViewById(R.id.login_forgotten_password);
