@@ -18,9 +18,9 @@ public class MieiCorsiAdapter extends ArrayAdapter {
 
     Context ctx;
     int resID;
-    List<MieiCorsi> list_corsi;
+    List<Corso> list_corsi;
 
-    public MieiCorsiAdapter(@NonNull Context context, int resource, @NonNull List<MieiCorsi> objects) {
+    public MieiCorsiAdapter(@NonNull Context context, int resource, @NonNull List<Corso> objects) {
         super(context, resource, objects);
         ctx = context;
         resID = resource;
@@ -41,14 +41,14 @@ public class MieiCorsiAdapter extends ArrayAdapter {
         ProgressBar vProgressBar = convertView.findViewById(R.id.course_progress);
 
 
-        MieiCorsi vCorso = list_corsi.get(position);
+        Corso vCorso = list_corsi.get(position);
 
-        vCourseName.setText(vCorso.getName());
-        vCourseProgressTextView.setText(getContext().getText(R.string.course_progress) + (vCorso.getProgress() + "") + "%");
+        vCourseName.setText(vCorso.getTitoloCorso());
+        vCourseProgressTextView.setText(getContext().getText(R.string.course_progress) + ("60" + "") + "%");
 
-        vProgressBar.setProgress(vCorso.getProgress());
+        vProgressBar.setProgress(60);
 
-        /*
+/*
         TextView textViewNome = convertView.findViewById(R.id.tv_nome);
         Contatti z1 = list_corsi.get(position);
         textViewNome.setText(z1.nome);

@@ -38,6 +38,7 @@ import it.stockato.its.myniuko.Fragment.EmailFragment;
 import it.stockato.its.myniuko.Forema.ForemaFragment;
 import it.stockato.its.myniuko.Fragment.MieiCorsiFragment;
 import it.stockato.its.myniuko.Fragment.UtenteFragment;
+import it.stockato.its.myniuko.MieiCorsi.Corso;
 import it.stockato.its.myniuko.R;
 import it.stockato.its.myniuko.Utente.Utente;
 import okhttp3.Call;
@@ -65,8 +66,8 @@ public class HomePage extends AppCompatActivity
   //  ArrayList<CalendarioCorso> listCalendarioCorso;
   //  ArrayList<ModuloCorso> listModuloCorso;
     public static  ArrayList<CalendarByIdCourse> listaLezioni;
-    public static ArrayList<Modulo> listModuli;
-
+    public static ArrayList<Modulo> listaModuli;
+public static ArrayList<Corso> listaCorsi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +80,17 @@ public class HomePage extends AppCompatActivity
         activity = this;
         getSupportActionBar().setTitle("Calendario");
 
+        listaLezioni = new ArrayList<>();
+        listaModuli = new ArrayList<>();
+        listaCorsi = new ArrayList<>();
+        chiamataCorsi();
+        chiamataCalendario();
+        chiamataModuliCorso();
+
         fragmentManager = getSupportFragmentManager();
         //listCalendarioCorso = new ArrayList<>();
         //listModuloCorso = new ArrayList<>();
-        listaLezioni = new ArrayList<>();
-        listModuli = new ArrayList<>();
+
 
         if(getIntent().getExtras() != null) {
             mUserID = getIntent().getExtras().getString("id");
@@ -285,32 +292,28 @@ public class HomePage extends AppCompatActivity
 
 
 
-
-
-    /*
-
-    public void chiamataCorso(){
-        Log.d("CORSO", "chiamata");
+    public void chiamataCorsi(){
+        Log.d("CORSI", "chiamata");
         OkHttpClient vClient = new OkHttpClient();
-        String url = "http://kennedysql.altervista.org/api_kennedy/userCalendar.php";
-        RequestBody vBody = new FormBody.Builder().add("ID", "1").build(); //devo mandare l'id dell'utente (mario rossi =1)
+        String url = "http://kennedysql.altervista.org/api_kennedy/userCourses.php";
+        RequestBody vBody = new FormBody.Builder().add("ID", "1").build(); //devo mandare l'id del corso (ID=1)
         Request vRequest = new Request.Builder().url(url).post(vBody).build();
         vClient.newCall(vRequest).enqueue(new Callback()
         {
             @Override
             public void onFailure(Call call, IOException e)
             {
-                Log.d("CORSO", "fail ");
+                Log.d("CORSI", "fail ");
                 e.printStackTrace();
             }
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException
             {
-                Log.d("CORSO", "response");
+                Log.d("CORSI", "response");
                 if(response.isSuccessful())
                 {
-                    Log.d("CORSO", "response success");
+                    Log.d("CORSI", "response success");
                     final String myResponse = response.body().string();
                     runOnUiThread(new Runnable()
                     {
@@ -320,61 +323,120 @@ public class HomePage extends AppCompatActivity
                             try
                             {
                                 JSONArray jsonArray = new JSONArray(myResponse);
-                                Log.d("CORSO", "response "+myResponse);
+                                Log.d("CORSI", "response "+myResponse);
 
                                 ArrayList<JSONObject> arrayList = new ArrayList(jsonArray.length());
+                                //  Toast.makeText(getContext(),""+lezione.getIDModulo()+modulo.getId(),Toast.LENGTH_SHORT).show();
+                                if(myResponse.equals("null")){
 
-                                if(myResponse==null){
-
-                                    DialogFragment wrongData = new DialogFragment("Attenzione", "Non ci sono lezioni per te", 1);
+                                    /*DialogFragment wrongData = new DialogFragment("Attenzione", "Non ci sono moduli per te 2", 1);
                                     wrongData.show(getFragmentManager(), "dialog");
-
+*/
                                 }else{
-                                    String id,idCorso,idModulo,dataGiorno,oreInizio,oreFine;
-                                    String autla,ore, statoGiorno,codiceCorso,titoloCorso;
-                                    String descrizioneCorso,totOreCorso,QRCorso,oreMin;
-                                    String dataInizioAtt,dataFineAtt,statoCorso,nomeAule;
+                                    String ID, IDUtente,idCorso,CodiceCorso,TitoloCorso,DescrizioneCorso,TotOreCorso,QRCorso,OreMin,DataInizioAtt,DataFineAtt,StatoCorso;
 
                                     for(int i=0;i < jsonArray.length();i++){
                                         arrayList.add(jsonArray.getJSONObject(i));
                                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                        id = jsonObject.getString("ID");
+                                        ID = jsonObject.getString("ID");
+                                        IDUtente = jsonObject.getString("IDUtente");
                                         idCorso = jsonObject.getString("IDCorso");
-                                        idModulo = jsonObject.getString("IDModulo");
-                                        dataGiorno = jsonObject.getString("DataGiorno");
-                                        oreInizio = jsonObject.getString("OreInizio");
-                                        oreFine = jsonObject.getString("OreFine");
-                                        autla = jsonObject.getString("Aula");
-                                        ore = jsonObject.getString("Ore");
-                                        statoGiorno = jsonObject.getString("StatoGiorno");
-                                        codiceCorso = jsonObject.getString("CodiceCorso");
-                                        titoloCorso = jsonObject.getString("TitoloCorso");
-                                        descrizioneCorso = jsonObject.getString("TitoloCorso");
-                                        totOreCorso = jsonObject.getString("TotOreCorso");
+                                        CodiceCorso = jsonObject.getString("CodiceCorso");
+                                        TitoloCorso = jsonObject.getString("TitoloCorso");
+                                        DescrizioneCorso = jsonObject.getString("DescrizioneCorso");
+                                        TotOreCorso = jsonObject.getString("TotOreCorso");
                                         QRCorso = jsonObject.getString("QRCorso");
-                                        oreMin = jsonObject.getString("OreMin");
-                                        dataInizioAtt = jsonObject.getString("DataInizioAtt");
-                                        dataFineAtt = jsonObject.getString("DataFineAtt");
-                                        statoCorso = jsonObject.getString("StatoCorso");
-                                        nomeAule = jsonObject.getString("NomeAule");
+                                        OreMin = jsonObject.getString("OreMin");
+                                        DataInizioAtt = jsonObject.getString("DataInizioAtt");
+                                        DataFineAtt = jsonObject.getString("DataFineAtt");
+                                        StatoCorso = jsonObject.getString("StatoCorso");
 
-                                        CalendarioCorso calendarioCorso = new CalendarioCorso(id, idCorso,idModulo,dataGiorno,oreInizio,
-                                                oreFine,autla,ore, statoGiorno,codiceCorso,titoloCorso,
-                                                descrizioneCorso,totOreCorso,QRCorso,oreMin,dataInizioAtt,dataFineAtt,
-                                                statoCorso,nomeAule);
-
-                                        listCalendarioCorso.add(calendarioCorso);
-                                        listLezioni.add(new Lezione(idCorso,idModulo,dataGiorno,oreInizio,oreFine));
+                                        Corso corso = new Corso(ID,IDUtente, idCorso,CodiceCorso,TitoloCorso,DescrizioneCorso,TotOreCorso,QRCorso,OreMin, DataInizioAtt,DataFineAtt,StatoCorso);
+                                        listaCorsi.add(corso);
 
                                     }
-
                                 }
-
-
                             }
                             catch (JSONException e)
                             {
-                                Log.d("CORSO", "exception: "+e.getMessage());
+                                Log.d("CORSI", "exception: "+e.getMessage());
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+
+    }
+
+
+    public void chiamataCalendario(){
+        Log.d("CALENDARIO", "chiamata");
+        OkHttpClient vClient = new OkHttpClient();
+        String url = "http://kennedysql.altervista.org/api_kennedy/calendarByIdCoure.php";
+        RequestBody vBody = new FormBody.Builder().add("ID", "1").build(); //devo mandare l'id del corso (ID=1)
+        Request vRequest = new Request.Builder().url(url).post(vBody).build();
+        vClient.newCall(vRequest).enqueue(new Callback()
+        {
+            @Override
+            public void onFailure(Call call, IOException e)
+            {
+                Log.d("CALENDARIO", "fail ");
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException
+            {
+                Log.d("CALENDARIO", "response");
+                if(response.isSuccessful())
+                {
+                    Log.d("CALENDARIO", "response success");
+                    final String myResponse = response.body().string();
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            try
+                            {
+                                JSONArray jsonArray = new JSONArray(myResponse);
+                                Log.d("CALENDARIO", "response "+myResponse);
+
+                                ArrayList<JSONObject> arrayList = new ArrayList(jsonArray.length());
+
+                                if(myResponse.equals("null")){
+/*
+                                    DialogFragment wrongData = new DialogFragment("Attenzione", "Non ci sono lezioni per te 2", 1);
+                                    wrongData.show(getActivity().getFragmentManager(), "dialog");
+*/
+                                }else{
+                                    String ID, IDCorso, IDModulo, DataGiorno, OreInizio, OreFine, Aula, Ore, StatoGiorno;
+
+                                    for(int i=0;i < jsonArray.length();i++){
+                                        arrayList.add(jsonArray.getJSONObject(i));
+                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                        ID = jsonObject.getString("ID");
+                                        IDCorso = jsonObject.getString("IDCorso");
+                                        IDModulo = jsonObject.getString("IDModulo");
+                                        DataGiorno = jsonObject.getString("DataGiorno");
+                                        OreInizio = jsonObject.getString("OreInizio");
+                                        OreFine = jsonObject.getString("OreFine");
+                                        Aula = jsonObject.getString("Aula");
+                                        Ore = jsonObject.getString("Ore");
+                                        StatoGiorno = jsonObject.getString("StatoGiorno");
+
+                                        CalendarByIdCourse calendarByIdCourse = new CalendarByIdCourse(ID, IDCorso, IDModulo, DataGiorno, OreInizio, OreFine, Aula, Ore,StatoGiorno, "Titolo modulo");
+                                        listaLezioni.add(calendarByIdCourse);
+
+                                    }
+                                }
+                            }
+                            catch (JSONException e)
+                            {
+                                Log.d("CALENDARIO", "exception: "+e.getMessage());
                                 e.printStackTrace();
                             }
                         }
@@ -385,28 +447,28 @@ public class HomePage extends AppCompatActivity
     }
 
 
-    public void chiamataModulo(){
-        Log.d("MODULO", "chiamata");
+    public void chiamataModuliCorso(){
+        Log.d("MODULI", "chiamata");
         OkHttpClient vClient = new OkHttpClient();
-        String url = "http://kennedysql.altervista.org/api_kennedy/courseModules.php";
-        RequestBody vBody = new FormBody.Builder().add("ID", "1").build(); //devo mandare l'id dell'utente (mario rossi =1)
+        String url = "http://kennedysql.altervista.org/api_kennedy/getModulesByIdCourse.php";
+        RequestBody vBody = new FormBody.Builder().add("ID", "1").build(); //devo mandare l'id del corso (ID=1)
         Request vRequest = new Request.Builder().url(url).post(vBody).build();
         vClient.newCall(vRequest).enqueue(new Callback()
         {
             @Override
             public void onFailure(Call call, IOException e)
             {
-                Log.d("MODULO", "fail ");
+                Log.d("MODULI", "fail ");
                 e.printStackTrace();
             }
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException
             {
-                Log.d("MODULO", "response");
+                Log.d("MODULI", "response");
                 if(response.isSuccessful())
                 {
-                    Log.d("MODULO", "response success");
+                    Log.d("MODULI", "response success");
                     final String myResponse = response.body().string();
                     runOnUiThread(new Runnable()
                     {
@@ -416,57 +478,44 @@ public class HomePage extends AppCompatActivity
                             try
                             {
                                 JSONArray jsonArray = new JSONArray(myResponse);
-                                Log.d("MODULO", "response "+myResponse);
+                                Log.d("MODULI", "response "+myResponse);
 
                                 ArrayList<JSONObject> arrayList = new ArrayList(jsonArray.length());
+                                //  Toast.makeText(getContext(),""+lezione.getIDModulo()+modulo.getId(),Toast.LENGTH_SHORT).show();
+                                if(myResponse.equals("null")){
 
-                                if(myResponse==null){
-
-                                    DialogFragment wrongData = new DialogFragment("Attenzione", "Non ci sono lezioni per te 2", 1);
+                                    /*DialogFragment wrongData = new DialogFragment("Attenzione", "Non ci sono moduli per te 2", 1);
                                     wrongData.show(getFragmentManager(), "dialog");
-
+*/
                                 }else{
-                                    String id,CodiceCorso,TitoloCorso,DescrizioneCorso,TotOreCorso,QRCorso;
-                                    String oreMin, dataInizioAtt, dataFineAtt, StatoCorso, CodiceModulo;
-                                    String TitoloModulo, DescrizioneModulo, TotOreModulo, IDCorso;
+                                    String ID, CodiceModulo, TitoloModulo, DescrizioneModulo, TotOreModulo, IDCorso;
 
                                     for(int i=0;i < jsonArray.length();i++){
                                         arrayList.add(jsonArray.getJSONObject(i));
                                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                        id = jsonObject.getString("ID");
-                                        CodiceCorso = jsonObject.getString("CodiceCorso");
-                                        TitoloCorso = jsonObject.getString("TitoloCorso");
-                                        DescrizioneCorso = jsonObject.getString("DescrizioneCorso");
-                                        TotOreCorso = jsonObject.getString("TotOreCorso");
-                                        QRCorso = jsonObject.getString("QRCorso");
-                                        oreMin = jsonObject.getString("OreMin");
-                                        dataInizioAtt = jsonObject.getString("DataInizioAtt");
-                                        dataFineAtt = jsonObject.getString("DataFineAtt");
-                                        StatoCorso = jsonObject.getString("StatoCorso");
+                                        ID = jsonObject.getString("ID");
                                         CodiceModulo = jsonObject.getString("CodiceModulo");
                                         TitoloModulo = jsonObject.getString("TitoloModulo");
                                         DescrizioneModulo = jsonObject.getString("DescrizioneModulo");
                                         TotOreModulo = jsonObject.getString("TotOreModulo");
                                         IDCorso = jsonObject.getString("IDCorso");
 
+                                        Modulo modulo = new Modulo(ID,CodiceModulo,TitoloModulo,DescrizioneModulo,TotOreModulo,IDCorso);
+                                        listaModuli.add(modulo);
 
-                                        ModuloCorso moduloCorso = new ModuloCorso(id, CodiceCorso,TitoloCorso,DescrizioneCorso,TotOreCorso,
-                                                QRCorso,oreMin, dataInizioAtt,dataFineAtt,StatoCorso,
-                                                CodiceModulo,TitoloModulo,DescrizioneModulo,TotOreModulo,IDCorso);
-
-                                        listModuloCorso.add(moduloCorso);
-                                        listModuli.add(new Modulo(id,CodiceModulo,TitoloModulo,DescrizioneModulo,TotOreModulo,IDCorso));
-
-
+                                        for(int l=0; l<listaLezioni.size(); l++){
+                                            CalendarByIdCourse c = listaLezioni.get(l);
+                                            if( c.getIDModulo().equals(listaModuli.get(i).getId())){
+                                                c.setTitoloModulo(listaModuli.get(i).getTitoloModulo());
+                                            }
+                                        }
                                     }
 
                                 }
-
-
                             }
                             catch (JSONException e)
                             {
-                                Log.d("MODULO", "exception: "+e.getMessage());
+                                Log.d("MODULI", "exception: "+e.getMessage());
                                 e.printStackTrace();
                             }
                         }
@@ -474,18 +523,9 @@ public class HomePage extends AppCompatActivity
                 }
             }
         });
+
+
     }
-*/
-
-
-
-
-
-
-
-
-
-
 
 
 

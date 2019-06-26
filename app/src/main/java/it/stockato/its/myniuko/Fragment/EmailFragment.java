@@ -74,7 +74,7 @@ public class EmailFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_email, container, false);
         WebView myWebView = (WebView) view.findViewById(R.id.webview);
-        myWebView.loadUrl("https://mail.google.com/mail/u/1/#inbox");
+        myWebView.loadUrl("https://accounts.google.com");
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         // Force links and redirects to open in the WebView instead of in a browser

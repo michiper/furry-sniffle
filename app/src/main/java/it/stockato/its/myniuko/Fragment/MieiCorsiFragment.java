@@ -4,16 +4,34 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
+import it.stockato.its.myniuko.Calendario.CalendarByIdCourse;
+import it.stockato.its.myniuko.Calendario.Modulo;
+import it.stockato.its.myniuko.MieiCorsi.Corso;
 import it.stockato.its.myniuko.MieiCorsi.MieiCorsi;
 import it.stockato.its.myniuko.MieiCorsi.MieiCorsiAdapter;
+import it.stockato.its.myniuko.Pages.HomePage;
 import it.stockato.its.myniuko.R;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +58,7 @@ public class MieiCorsiFragment extends Fragment {
     }
 
     ListView listView;
+    ArrayList<Corso> listaCorsi;
 
     /**
      * Use this factory method to create a new instance of
@@ -66,6 +85,7 @@ public class MieiCorsiFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -73,12 +93,10 @@ public class MieiCorsiFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_miei_corsi, container, false);
+
+        listaCorsi = HomePage.listaCorsi;
         listView = view.findViewById(R.id.listview_mieicorsi);
         //adapter
-        ArrayList<MieiCorsi> listaCorsi = new ArrayList<>();
-        listaCorsi.add(new MieiCorsi("App Mobile", 60, new String[] {"UC1", "UC2"}));
-        listaCorsi.add(new MieiCorsi("Sviluppo Web", 35, new String[] {"UC1", "UC2", "UC3", "Approfondimento"}));
-        //listaCorsi.add(new MieiCorsi("App Mobile"));
         MieiCorsiAdapter adapter = new MieiCorsiAdapter(getContext(), R.layout.mieicorsi_cell, listaCorsi);
         listView.setAdapter(adapter);
 
@@ -124,4 +142,7 @@ public class MieiCorsiFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
+
 }

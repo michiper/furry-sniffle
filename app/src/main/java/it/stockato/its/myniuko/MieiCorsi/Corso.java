@@ -3,6 +3,10 @@ package it.stockato.its.myniuko.MieiCorsi;
 import java.util.Date;
 
 public class Corso {
+
+    //[{"ID":"","IDUtente":"","IDCorso":"","CodiceCorso":"","TitoloCorso":"","DescrizioneCorso":"","TotOreCorso":"","QRCorso":"","OreMin":"600","DataInizioAtt":"","DataFineAtt":"","StatoCorso":"1"}]
+    String ID;
+    String IDUtente;
     String idCorso;
     String codiceCorso;
     String titoloCorso;
@@ -14,8 +18,9 @@ public class Corso {
     String dataFineAtt;
     String statoCorso;
 
-
-    public Corso(String idCorso, String codiceCorso, String titoloCorso, String descrizioneCorso, String totOreCorso, String QRcorso, String oreMin, String dataInizioAtt, String dataFineAtt, String statoCorso) {
+    public Corso(String ID, String IDUtente, String idCorso, String codiceCorso, String titoloCorso, String descrizioneCorso, String totOreCorso, String QRcorso, String oreMin, String dataInizioAtt, String dataFineAtt, String statoCorso) {
+        this.ID = ID;
+        this.IDUtente = IDUtente;
         this.idCorso = idCorso;
         this.codiceCorso = codiceCorso;
         this.titoloCorso = titoloCorso;
@@ -26,6 +31,14 @@ public class Corso {
         this.dataInizioAtt = dataInizioAtt;
         this.dataFineAtt = dataFineAtt;
         this.statoCorso = statoCorso;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public String getIDUtente() {
+        return IDUtente;
     }
 
     public String getIdCorso() {
